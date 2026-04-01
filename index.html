@@ -7,7 +7,10 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #000; overflow: hidden; font-family: 'Fredoka One', cursive, sans-serif; }
+        body, html /* ... kode CSS lainnya ... */
+    touch-action: none; /* Memblokir semua gesture bawaan browser */
+    -ms-touch-action: none; /* Untuk browser versi lama */
+}
 
         /* --- NOTIFIKASI LANDSCAPE --- */
         #landscape-warning {
@@ -307,7 +310,24 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {// 1. Memblokir "Pinch-to-Zoom" (Cubit untuk memperbesar)
+document.addEventListener('touchmove', function(event) {
+    // Jika ada lebih dari 1 jari menyentuh layar (cubitan)
+    if (event.touches.length > 1) {
+        event.preventDefault();
+    }
+}, { passive: false }); // 'passive: false' wajib agar preventDefault() berfungsi
+
+// 2. Memblokir "Double-Tap-to-Zoom" (Ketuk dua kali cepat untuk memperbesar)
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(event) {
+    let now = (new Date()).getTime();
+    // Jika jarak antara ketukan pertama dan kedua kurang dari 300 milidetik
+    if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+    }
+    lastTouchEnd = now;
+}, { passive: false });
             const loginBtn = document.getElementById('login-submit-btn');
             const loginMenu = document.getElementById('login-menu');
             const errorMsg = document.getElementById('login-error');
