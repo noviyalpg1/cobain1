@@ -2,27 +2,40 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Petualangan Mariolpg</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
-        body, html /* ... kode CSS lainnya ... */
-    touch-action: none; /* Memblokir semua gesture bawaan browser */
-    -ms-touch-action: none; /* Untuk browser versi lama */
+        body, html { 
+    margin: 0; 
+    padding: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: #000; 
+    /* Ganti overflow: hidden menjadi: */
+    overflow: auto; 
+    font-family: 'Fredoka One', cursive, sans-serif; 
+    /* Penting agar browser tidak memproses gesture pinch sebagai refresh */
+    touch-action: manipulation; 
 }
 
-        /* --- NOTIFIKASI LANDSCAPE --- */
-        #landscape-warning {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #e52521; color: #fff; z-index: 10000;
-            display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box;
-        }
-        .phone-icon { font-size: 80px; margin-bottom: 20px; animation: rotatePhone 2s infinite ease-in-out; }
-        @keyframes rotatePhone { 0% { transform: rotate(0deg); } 50% { transform: rotate(-90deg); } 100% { transform: rotate(0deg); } }
-        @media screen and (max-width: 768px) and (orientation: portrait) { #landscape-warning { display: flex; } #game-wrapper { display: none !important; } }
+#game-wrapper { 
+    /* Hapus atau ganti width/height agar tidak mengunci 100vh saat zoom */
+    min-width: 100vw; 
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        #game-container { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background-color: #5c94fc; overflow: hidden; }
-        canvas { display: block; width: 100%; height: 100%; }
+canvas { 
+    display: block; 
+    /* Jangan gunakan 100%, gunakan max-width agar bisa mengecil/membesar */
+    max-width: 100%; 
+    height: auto; 
+    object-fit: contain; 
+}
 
         /* --- UI OVERLAYS --- */
         .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(92, 148, 252, 0.95); z-index: 100; }
@@ -134,225 +147,17 @@
         </div>
     </div>
 
-    <style>
-        /* --- 1. Tema & Variabel Desain Modern --- */
-        :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --bg-color: #f8fafc;
-            --surface: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --error: #ef4444;
-        }
-
-        /* Reset margin & padding dasar */
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-        }
-
-        body, html { 
-            width: 100%; 
-            height: 100%; 
-            background: var(--bg-color); 
-            color: var(--text-main); 
-            overflow: hidden; /* Mencegah scroll yang tidak disengaja */
-            touch-action: none; /* Mencegah pull-to-refresh di HP */
-        }
-
-        /* --- 2. Layout Utama (Game + Kontrol) --- */
-        #main-layout { 
-            display: flex; 
-            width: 100%; 
-            height: 100%; 
-        }
-
-        #game-area { 
-            flex: 1; 
-            background: #cbd5e1; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 1.5rem; 
-            font-weight: 600; 
-            color: var(--text-muted);
-            /* Tambahkan canvas game kamu di dalam sini nantinya */
-        }
-
-        #controls-area { 
-            background: var(--surface); 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
-            overflow-y: auto;
-        }
-
-        /* --- 3. Aturan Responsif (Potret vs Lanskap) --- */
-        
-        /* Jika layar tegak (HP Potret) */
-        @media (orientation: portrait) {
-            #main-layout { flex-direction: column; }
-            #controls-area { 
-                width: 100%; 
-                height: 35%; /* Kontrol memakan 35% layar bawah */
-                border-top: 1px solid #e2e8f0;
-                box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
-            }
-        }
-
-        /* Jika layar miring (HP Lanskap / PC) */
-        @media (orientation: landscape) {
-            #main-layout { flex-direction: row; }
-            #controls-area { 
-                width: 300px; /* Lebar tetap di samping */
-                height: 100%; 
-                border-left: 1px solid #e2e8f0;
-                box-shadow: -4px 0 10px rgba(0,0,0,0.05);
-            }
-        }
-
-        /* --- 4. Desain Menu Login (Overlay) --- */
-        .overlay { 
-            position: fixed; 
-            top: 0; left: 0; width: 100vw; height: 100vh; 
-            background: rgba(15, 23, 42, 0.75); 
-            backdrop-filter: blur(4px); 
-            display: flex; align-items: center; justify-content: center; 
-            z-index: 1000; 
-            transition: opacity 0.3s ease; 
-        }
-
-        .login-box { 
-            background: var(--surface); 
-            padding: 30px; 
-            border-radius: 16px; 
-            width: 90%; max-width: 380px; 
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); 
-            text-align: center; 
-        }
-
-        .login-box h2 { margin-bottom: 20px; font-size: 1.5rem; color: var(--text-main); }
-
-        #login-error { 
-            color: var(--error); 
-            font-size: 0.875rem; 
-            margin-bottom: 15px; 
-            display: none; 
-            font-weight: 500; 
-            background: #fef2f2;
-            padding: 8px;
-            border-radius: 6px;
-        }
-
-        .input-group { margin-bottom: 16px; text-align: left; }
-        .input-group label { display: block; font-size: 0.875rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
-        .input-field { 
-            width: 100%; 
-            padding: 14px 16px; /* Padding lebih besar untuk jari */
-            border: 1px solid #cbd5e1; 
-            border-radius: 10px; 
-            font-size: 1rem; 
-            outline: none; 
-            transition: border-color 0.2s; 
-        }
-        .input-field:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
-
-        /* Desain Tombol (Touch-friendly) */
-        .btn { 
-            width: 100%; 
-            padding: 16px; 
-            border: none; border-radius: 10px; 
-            font-size: 1rem; font-weight: 600; 
-            cursor: pointer; 
-            transition: background 0.2s, transform 0.1s; 
-        }
-        .btn:active { transform: scale(0.98); } /* Efek saat ditekan */
-        .btn-blue { background: var(--primary); color: white; }
-        .btn-blue:hover { background: var(--primary-hover); }
-        .btn-secondary { background: #e2e8f0; color: var(--text-main); }
-    </style>
-</head>
-<body>
-
+    <!-- UI Menus -->
     <div id="login-menu" class="overlay">
-        <div class="login-box">
+        
+		<div class="login-box">
             <h2>Masuk Dulu Yuk!</h2>
             <div id="login-error">Nama dan Sekolah harus diisi!</div>
-            
-            <div class="input-group">
-                <label for="player-name">Nama Kamu</label>
-                <input type="text" id="player-name" class="input-field" autocomplete="off" placeholder="Misal: Budi">
-            </div>
-            
-            <div class="input-group">
-                <label for="player-school">Asal Sekolah</label>
-                <input type="text" id="player-school" class="input-field" autocomplete="off" placeholder="Misal: SMA 1">
-            </div>
-            
+            <div class="input-group"><label>Nama Kamu:</label><input type="text" id="player-name" class="input-field" autocomplete="off"></div>
+            <div class="input-group"><label>Asal Sekolah:</label><input type="text" id="player-school" class="input-field" autocomplete="off"></div>
             <button class="btn btn-blue" id="login-submit-btn">Mulai Petualangan</button>
         </div>
     </div>
-
-    <div id="main-layout">
-        <div id="game-area">
-            [ Area Game / Simulasi ]
-        </div>
-        
-        <div id="controls-area">
-            <h3 style="margin-bottom: 5px; font-size: 1.1rem;">Kontrol</h3>
-            <button class="btn btn-blue" onclick="alert('Lompat!')">Lompat</button>
-            <button class="btn btn-secondary" onclick="alert('Serang!')">Serang</button>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {// 1. Memblokir "Pinch-to-Zoom" (Cubit untuk memperbesar)
-document.addEventListener('touchmove', function(event) {
-    // Jika ada lebih dari 1 jari menyentuh layar (cubitan)
-    if (event.touches.length > 1) {
-        event.preventDefault();
-    }
-}, { passive: false }); // 'passive: false' wajib agar preventDefault() berfungsi
-
-// 2. Memblokir "Double-Tap-to-Zoom" (Ketuk dua kali cepat untuk memperbesar)
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function(event) {
-    let now = (new Date()).getTime();
-    // Jika jarak antara ketukan pertama dan kedua kurang dari 300 milidetik
-    if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-    }
-    lastTouchEnd = now;
-}, { passive: false });
-            const loginBtn = document.getElementById('login-submit-btn');
-            const loginMenu = document.getElementById('login-menu');
-            const errorMsg = document.getElementById('login-error');
-            const nameInput = document.getElementById('player-name');
-            const schoolInput = document.getElementById('player-school');
-
-            loginBtn.addEventListener('click', () => {
-                // Validasi Input
-                if (nameInput.value.trim() === '' || schoolInput.value.trim() === '') {
-                    errorMsg.style.display = 'block';
-                } else {
-                    errorMsg.style.display = 'none';
-                    
-                    // Transisi halus saat menutup menu
-                    loginMenu.style.opacity = '0';
-                    setTimeout(() => {
-                        loginMenu.style.display = 'none';
-                    }, 300); // Sesuai dengan durasi transisi di CSS
-                    
-                    // Kamu bisa menambahkan logika memulai game di sini
-                    console.log(`Pemain: ${nameInput.value}, Sekolah: ${schoolInput.value}`);
-                }
-            });
-        });
-    </script>
 
     <div id="main-menu" class="overlay hidden">
         <img id="title-img" src="https://imgur.com/VmSLsxs.png" alt="Petualangan Mariolpg">
