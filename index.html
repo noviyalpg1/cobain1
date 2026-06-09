@@ -25,9 +25,8 @@
   --text: #0f172a;
   --text2: #475569;
   --text3: #94a3b8;
-  --sidebar-w: 260px;
+  --sidebar-w: 270px;
   --header-h: 60px;
-  --ai-panel-w: 320px;
   --radius: 12px;
   --shadow: 0 2px 12px rgba(26,86,219,0.08);
   --shadow-lg: 0 8px 32px rgba(26,86,219,0.12);
@@ -56,8 +55,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 #main-area{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh;transition:margin var(--transition)}
 #header{height:var(--header-h);background:var(--surface);border-bottom:1.5px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;position:sticky;top:0;z-index:100;transition:background var(--transition)}
 #content-area{flex:1;display:flex;gap:0;min-height:0}
-#main-content{flex:1;padding:24px;overflow-y:auto;min-height:calc(100vh - var(--header-h))}
-#ai-panel{width:var(--ai-panel-w);background:var(--surface);border-left:1.5px solid var(--border);display:flex;flex-direction:column;position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));overflow:hidden;transition:width var(--transition),background var(--transition)}
+#main-content{flex:1;padding:24px;overflow-y:auto;overflow-x:auto;min-height:calc(100vh - var(--header-h))}
 
 /* ===== SIDEBAR ===== */
 .sidebar-logo{padding:18px 18px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
@@ -65,31 +63,24 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .logo-text{font-size:1.05rem;font-weight:800;color:var(--primary);line-height:1.1}
 .logo-sub{font-size:0.65rem;color:var(--text3);font-weight:500;letter-spacing:0.04em}
 
-.sidebar-search{padding:12px 14px}
-.sidebar-search input{width:100%;padding:8px 12px 8px 34px;border:1.5px solid var(--border);border-radius:8px;font-size:0.8rem;background:var(--bg);color:var(--text);outline:none;font-family:inherit;transition:border-color var(--transition)}
-.sidebar-search input:focus{border-color:var(--primary)}
-.search-wrap{position:relative}
-.search-wrap .s-ico{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:0.9rem;color:var(--text3);pointer-events:none}
-
-.sidebar-nav{flex:1;padding:6px 10px;display:flex;flex-direction:column;gap:2px}
-.nav-section{margin-top:10px}
-.nav-section-title{font-size:0.65rem;font-weight:700;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;padding:4px 8px 6px}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;transition:background var(--transition),color var(--transition);color:var(--text2);font-size:0.82rem;font-weight:500;position:relative;text-decoration:none}
-.nav-item:hover{background:var(--primary-light);color:var(--primary)}
-.nav-item.active{background:var(--primary-light);color:var(--primary);font-weight:600}
-.nav-item .n-ico{width:20px;text-align:center;font-size:1rem;flex-shrink:0}
-.nav-item .badge{margin-left:auto;background:var(--primary);color:#fff;font-size:0.6rem;font-weight:700;padding:1px 6px;border-radius:20px}
-.nav-sub{padding-left:12px;display:flex;flex-direction:column;gap:1px}
-.nav-sub .nav-item{font-size:0.78rem;padding:7px 10px}
-.nav-parent{cursor:pointer}
-.nav-parent .arrow{margin-left:auto;font-size:0.7rem;transition:transform 0.2s}
-.nav-parent.open .arrow{transform:rotate(90deg)}
+.sidebar-nav{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:4px}
+.nav-section-title{font-size:0.65rem;font-weight:700;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;padding:8px 8px 4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:background var(--transition),color var(--transition);color:var(--text2);font-size:0.82rem;font-weight:600;position:relative;text-decoration:none}
+.nav-item:hover:not(.locked){background:var(--primary-light);color:var(--primary)}
+.nav-item.active{background:var(--primary-light);color:var(--primary);font-weight:700}
+.nav-item .n-ico{width:22px;text-align:center;font-size:1.1rem;flex-shrink:0}
+.nav-item.locked{opacity:0.55;cursor:not-allowed;}
+.nav-item.locked:hover{background:transparent;color:var(--text2)}
+.nav-item .lock-icon{margin-left:auto;font-size:0.85rem;display:none;color:var(--text3)}
+.nav-item.locked .lock-icon{display:block}
+.nav-item .check-icon{margin-left:auto;font-size:0.9rem;display:none;color:var(--accent2)}
+.nav-item.completed .check-icon{display:block}
 
 .sidebar-footer{padding:14px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
 .user-card{display:flex;align-items:center;gap:10px}
 .user-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:0.85rem;flex-shrink:0}
 .user-info{flex:1;min-width:0}
-.user-name{font-size:0.82rem;font-weight:600;truncate:ellipsis;white-space:nowrap;overflow:hidden}
+.user-name{font-size:0.82rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .user-role{font-size:0.68rem;color:var(--text3)}
 
 /* ===== HEADER ===== */
@@ -100,279 +91,150 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .header-actions{display:flex;align-items:center;gap:8px}
 .h-btn{background:none;border:none;cursor:pointer;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;color:var(--text2);transition:background var(--transition),color var(--transition)}
 .h-btn:hover{background:var(--primary-light);color:var(--primary)}
-.h-btn.notif-btn{position:relative}
-.notif-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;background:var(--danger);border-radius:50%;border:2px solid var(--surface)}
 
-/* ===== BREADCRUMB ===== */
+/* ===== BREADCRUMB & PAGE HEADER ===== */
 .breadcrumb{display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--text3);margin-bottom:18px;flex-wrap:wrap}
 .breadcrumb a{color:var(--primary);text-decoration:none;font-weight:500;cursor:pointer;}
 .breadcrumb .sep{color:var(--text3)}
-
-/* ===== PAGE HEADER ===== */
-.page-header{margin-bottom:22px}
-.page-title{font-size:1.4rem;font-weight:800;color:var(--text);line-height:1.2;font-family:'DM Serif Display',serif}
-.page-sub{font-size:0.82rem;color:var(--text2);margin-top:4px}
+.page-header{margin-bottom:22px; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:10px}
+.page-title{font-size:1.5rem;font-weight:800;color:var(--text);line-height:1.2;font-family:'DM Serif Display',serif}
+.page-sub{font-size:0.85rem;color:var(--text2);margin-top:6px}
 
 /* ===== CARDS ===== */
-.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;transition:box-shadow var(--transition),background var(--transition)}
-.card:hover{box-shadow:var(--shadow)}
-.card-title{font-size:0.95rem;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.card-title .ico{width:28px;height:28px;border-radius:8px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;transition:box-shadow var(--transition),background var(--transition);margin-bottom:20px}
+.card-title{font-size:1.05rem;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:10px;color:var(--primary)}
+.card-title .ico{width:32px;height:32px;border-radius:8px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:1.1rem}
 
-/* ===== STATS ===== */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:22px}
-.stat-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;cursor:pointer;transition:all var(--transition);position:relative;overflow:hidden}
-.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--stat-color,var(--primary))}
-.stat-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
-.stat-label{font-size:0.72rem;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px}
-.stat-value{font-size:1.8rem;font-weight:800;color:var(--text);line-height:1;font-family:'DM Serif Display',serif}
-.stat-sub{font-size:0.72rem;color:var(--text3);margin-top:5px}
-.stat-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:2rem;opacity:0.12}
+/* ===== FORMS ===== */
+.form-group{margin-bottom:16px}
+.form-label{font-size:0.8rem;font-weight:700;color:var(--text2);margin-bottom:6px;display:block}
+.form-input,.form-select,.form-textarea{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:0.85rem;background:var(--surface);color:var(--text);font-family:inherit;outline:none;transition:border-color var(--transition)}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(26,86,219,0.08)}
+.form-textarea{resize:vertical;min-height:80px}
+.form-row{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:16px}
+.form-row3{display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:16px}
 
-/* ===== WIZARD ===== */
-.wizard-wrap{background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 100%);border-radius:var(--radius);padding:22px;margin-bottom:22px;color:#fff;position:relative;overflow:hidden}
-.wizard-wrap::before{content:'';position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.08)}
-.wizard-wrap::after{content:'';position:absolute;right:60px;bottom:-20px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.06)}
-.wizard-title{font-size:1.1rem;font-weight:800;margin-bottom:4px;font-family:'DM Serif Display',serif}
-.wizard-sub{font-size:0.78rem;opacity:0.85;margin-bottom:16px}
-.wizard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
-.wizard-select{padding:9px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.15);color:#fff;font-size:0.82rem;font-family:inherit;font-weight:500;outline:none;cursor:pointer;width:100%;-webkit-appearance:none;appearance:none}
-.wizard-select option{color:var(--text);background:var(--surface)}
-.wizard-label{font-size:0.68rem;font-weight:700;opacity:0.8;letter-spacing:0.05em;margin-bottom:4px;text-transform:uppercase}
-.wizard-btn{background:#fff;color:var(--primary);border:none;padding:10px 24px;border-radius:8px;font-size:0.88rem;font-weight:700;cursor:pointer;transition:all var(--transition);display:inline-flex;align-items:center;gap:8px;font-family:inherit}
-.wizard-btn:hover{background:#e8f0fe;transform:scale(1.02)}
-.wizard-btn .spin{display:none;animation:spin 0.8s linear infinite}
-.wizard-btn.loading .spin{display:inline}
-.wizard-btn.loading .btn-text{opacity:0.6}
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;border-radius:8px;font-size:0.85rem;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all var(--transition)}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(26,86,219,0.2)}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
+.btn-outline:hover{background:var(--primary-light)}
+.btn-ghost{background:transparent;color:var(--text2);border:1.5px solid var(--border)}
+.btn-ghost:hover{background:var(--bg);color:var(--text)}
+.btn-danger{background:transparent;color:var(--danger);border:1.5px solid var(--danger)}
+.btn-danger:hover{background:#fee2e2}
+.btn-sm{padding:6px 14px;font-size:0.78rem}
+.btn-lg{padding:14px 28px;font-size:0.95rem}
+.btn-group{display:flex;gap:10px;flex-wrap:wrap}
 
-@keyframes spin{to{transform:rotate(360deg)}}
+/* ===== TABLE ===== */
+.table-wrap{overflow-x:auto;border-radius:8px;border:1.5px solid var(--border);margin-bottom:16px}
+table{width:100%;border-collapse:collapse;font-size:0.85rem}
+thead{background:var(--bg2)}
+th{padding:12px 16px;text-align:left;font-weight:800;color:var(--text2);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1.5px solid var(--border)}
+td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.6}
+tr:hover td{background:var(--primary-light)}
+.badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:800;white-space:nowrap}
+.badge-blue{background:#dbeafe;color:#1e40af}
+.badge-green{background:#d1fae5;color:#065f46}
+.badge-yellow{background:#fef3c7;color:#92400e}
+.badge-purple{background:#ede9fe;color:#5b21b6}
+.badge-gray{background:var(--bg2);color:var(--text2)}
 
 /* ===== TABS ===== */
-.tabs{display:flex;gap:4px;border-bottom:1.5px solid var(--border);margin-bottom:18px;overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{padding:9px 16px;font-size:0.82rem;font-weight:600;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;color:var(--text2);white-space:nowrap;transition:all var(--transition)}
+.tabs{display:flex;gap:4px;border-bottom:1.5px solid var(--border);margin-bottom:20px;overflow-x:auto;scrollbar-width:none}
+.tab{padding:10px 18px;font-size:0.85rem;font-weight:700;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1.5px;color:var(--text2);white-space:nowrap}
 .tab:hover{color:var(--primary)}
 .tab.active{color:var(--primary);border-bottom-color:var(--primary)}
 .tab-content{display:none}
 .tab-content.active{display:block}
 
-/* ===== FORMS ===== */
-.form-group{margin-bottom:14px}
-.form-label{font-size:0.78rem;font-weight:600;color:var(--text2);margin-bottom:5px;display:block}
-.form-input,.form-select,.form-textarea{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:0.83rem;background:var(--surface);color:var(--text);font-family:inherit;outline:none;transition:border-color var(--transition)}
-.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(26,86,219,0.08)}
-.form-textarea{resize:vertical;min-height:80px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+/* ===== STATS ===== */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;transition:all var(--transition);position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--stat-color,var(--primary))}
+.stat-label{font-size:0.75rem;color:var(--text2);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px}
+.stat-value{font-size:2rem;font-weight:800;color:var(--text);line-height:1;font-family:'DM Serif Display',serif}
+.stat-sub{font-size:0.75rem;color:var(--text3);margin-top:6px}
+.stat-icon{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:2.5rem;opacity:0.1}
 
-/* ===== BUTTONS ===== */
-.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;font-size:0.83rem;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all var(--transition)}
-.btn-primary{background:var(--primary);color:#fff}
-.btn-primary:hover{background:var(--primary-dark)}
-.btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
-.btn-outline:hover{background:var(--primary-light)}
-.btn-ghost{background:transparent;color:var(--text2);border:1.5px solid var(--border)}
-.btn-ghost:hover{background:var(--bg);color:var(--text)}
-.btn-success{background:var(--accent2);color:#fff}
-.btn-success:hover{background:#059669}
-.btn-sm{padding:6px 12px;font-size:0.77rem}
-.btn-lg{padding:12px 26px;font-size:0.92rem}
-.btn-group{display:flex;gap:8px;flex-wrap:wrap}
+/* ===== GENERATED DOCS ===== */
+.doc-preview{background:#fff;border:1px solid #ccc;border-radius:8px;padding:30px 40px;font-size:12pt;line-height:1.5;color:#000;font-family:'Times New Roman',Times,serif;overflow-x:auto;box-shadow:0 4px 15px rgba(0,0,0,0.05)}
+.doc-preview h1,.doc-preview h2{text-align:center;font-weight:bold;color:#000;margin-bottom:20px}
+.doc-preview h1{font-size:14pt;text-decoration:underline}
+.doc-preview h2{font-size:12pt}
+.doc-preview table{border-collapse:collapse;width:100%;margin-bottom:20px}
+.doc-preview th,.doc-preview td{border:1px solid #000;padding:6px 8px;font-size:11pt;color:#000}
+.doc-preview th{background:#f0f0f0;font-weight:bold;text-align:center}
+.doc-preview .no-border td{border:none;padding:2px 4px}
 
-/* ===== TABLE ===== */
-.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1.5px solid var(--border)}
-table{width:100%;border-collapse:collapse;font-size:0.82rem}
-thead{background:var(--bg2)}
-th{padding:10px 14px;text-align:left;font-weight:700;color:var(--text2);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1.5px solid var(--border)}
-td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--primary-light)}
-.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:0.7rem;font-weight:700}
-.badge-blue{background:#dbeafe;color:#1e40af}
-.badge-green{background:#d1fae5;color:#065f46}
-.badge-yellow{background:#fef3c7;color:#92400e}
-.badge-red{background:#fee2e2;color:#991b1b}
-.badge-gray{background:var(--bg2);color:var(--text2)}
-.badge-purple{background:#ede9fe;color:#5b21b6}
+/* ===== SETUP WIZARD (MASTER DATA) ===== */
+.setup-wrap{max-width:1000px;margin:0 auto}
+.setup-section{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+.setup-section-title{font-size:1.15rem;font-weight:800;color:var(--primary);margin-bottom:18px;display:flex;align-items:center;gap:10px;border-bottom:1.5px solid var(--border);padding-bottom:12px}
+.setup-section-title span{background:var(--primary);color:#fff;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:0.8rem}
+.checkbox-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.checkbox-item{display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--text2);cursor:pointer;background:var(--bg);padding:10px 12px;border-radius:8px;border:1px solid var(--border)}
+.cp-row{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
+.cp-row .cp-num{width:32px;height:32px;background:var(--primary-light);color:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.85rem;flex-shrink:0;margin-top:4px}
+.cp-row textarea{flex:1}
 
-/* ===== PROGRESS ===== */
-.progress{height:6px;background:var(--bg2);border-radius:20px;overflow:hidden;margin-top:6px}
-.progress-bar{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width 0.5s ease}
+/* ===== OTHER ===== */
+.empty-state{text-align:center;padding:48px 24px;color:var(--text3)}
+.empty-state .es-icon{font-size:4rem;margin-bottom:16px;opacity:0.3}
+.empty-state .es-title{font-size:1.1rem;font-weight:800;color:var(--text2);margin-bottom:8px}
 
-/* ===== AI PANEL ===== */
-.ai-panel-header{padding:14px 16px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:10px}
-.ai-logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#8b5cf6,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
-.ai-title{font-weight:700;font-size:0.9rem}
-.ai-status{font-size:0.68rem;color:var(--accent2);font-weight:600}
-.ai-body{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
-.ai-close-btn{margin-left:auto;background:none;border:none;cursor:pointer;font-size:1rem;color:var(--text3);display:none}
-.ai-section{background:var(--bg);border-radius:10px;padding:12px}
-.ai-section-title{font-size:0.72rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px}
-.ai-item{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;cursor:pointer;transition:all var(--transition);margin-bottom:6px}
-.ai-item:hover{border-color:var(--primary);box-shadow:0 0 0 3px rgba(26,86,219,0.06)}
-.ai-item:last-child{margin-bottom:0}
-.ai-item-title{font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:3px}
-.ai-item-desc{font-size:0.72rem;color:var(--text2)}
-.ai-gen-btn{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border:none;padding:10px;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;width:100%;font-family:inherit;transition:opacity var(--transition);display:flex;align-items:center;justify-content:center;gap:8px}
-.ai-gen-btn:hover{opacity:0.9}
-.ai-output{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:12px;font-size:0.78rem;line-height:1.7;color:var(--text2);max-height:250px;overflow-y:auto;display:none}
-.ai-output.visible{display:block}
-.ai-typing::after{content:'▋';animation:blink 1s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-
-/* ===== TOAST ===== */
 #toast-container{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
-.toast{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;font-size:0.82rem;font-weight:600;box-shadow:var(--shadow-lg);animation:slideIn 0.3s ease;min-width:260px;max-width:360px;pointer-events:all}
-.toast-success{border-left:4px solid var(--accent2)}
-.toast-error{border-left:4px solid var(--danger)}
-.toast-info{border-left:4px solid var(--primary)}
-.toast-warn{border-left:4px solid var(--warn)}
+.toast{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:12px;font-size:0.85rem;font-weight:700;box-shadow:var(--shadow-lg);animation:slideIn 0.3s cubic-bezier(0.4,0,0.2,1);pointer-events:all}
+.toast-success{border-left:5px solid var(--accent2)}
+.toast-error{border-left:5px solid var(--danger)}
+.toast-info{border-left:5px solid var(--primary)}
+.toast-warn{border-left:5px solid var(--warn)}
 @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
 @keyframes slideOut{to{transform:translateX(110%);opacity:0}}
 
-/* ===== MODAL ===== */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--transition);backdrop-filter:blur(4px)}
-.modal-overlay.open{opacity:1;pointer-events:all}
-.modal{background:var(--surface);border-radius:var(--radius);padding:24px;width:90%;max-width:600px;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow-lg);transform:scale(0.95);transition:transform var(--transition)}
-.modal-overlay.open .modal{transform:scale(1)}
-.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.modal-title{font-size:1.05rem;font-weight:800;font-family:'DM Serif Display',serif}
-.modal-close{background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--text3);width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:background var(--transition)}
-.modal-close:hover{background:var(--bg2);color:var(--text)}
-
-/* ===== ACCORDION ===== */
-.accordion{border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.accordion-item{border-bottom:1px solid var(--border)}
-.accordion-item:last-child{border-bottom:none}
-.accordion-header{padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;font-size:0.88rem;font-weight:600;background:var(--surface);transition:background var(--transition)}
-.accordion-header:hover{background:var(--bg2)}
-.accordion-arrow{margin-left:auto;font-size:0.75rem;color:var(--text3);transition:transform 0.2s}
-.accordion-item.open .accordion-arrow{transform:rotate(180deg)}
-.accordion-body{display:none;padding:14px 16px;background:var(--bg);font-size:0.83rem;line-height:1.7;color:var(--text2)}
-.accordion-item.open .accordion-body{display:block}
-
-/* ===== CHARTS ===== */
-.chart-bar-wrap{display:flex;flex-direction:column;gap:8px}
-.chart-bar-item{display:flex;align-items:center;gap:10px;font-size:0.78rem}
-.chart-bar-label{width:80px;color:var(--text2);font-weight:500;flex-shrink:0;text-align:right}
-.chart-bar-track{flex:1;height:10px;background:var(--bg2);border-radius:20px;overflow:hidden}
-.chart-bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width 0.8s ease}
-.chart-bar-val{width:36px;text-align:right;font-weight:700;color:var(--text);flex-shrink:0}
-
-/* ===== DOC EDITOR ===== */
-.doc-toolbar{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;background:var(--bg);border-bottom:1.5px solid var(--border);border-radius:var(--radius) var(--radius) 0 0}
-.doc-toolbar button{background:var(--surface);border:1.5px solid var(--border);border-radius:6px;padding:5px 10px;font-size:0.75rem;cursor:pointer;font-family:inherit;color:var(--text2);font-weight:600;transition:all var(--transition)}
-.doc-toolbar button:hover{background:var(--primary-light);color:var(--primary);border-color:var(--primary)}
-.doc-editor{border:1.5px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);min-height:300px;padding:18px;font-size:0.85rem;line-height:1.8;color:var(--text);background:var(--surface);outline:none}
-.doc-editor:focus{border-color:var(--primary)}
-
-/* ===== CALENDAR ===== */
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}
-.cal-day-name{font-size:0.68rem;font-weight:700;text-align:center;color:var(--text3);padding:4px}
-.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:0.78rem;cursor:pointer;transition:background var(--transition)}
-.cal-day:hover{background:var(--primary-light);color:var(--primary)}
-.cal-day.today{background:var(--primary);color:#fff;font-weight:700}
-.cal-day.has-event{position:relative}
-.cal-day.has-event::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;background:var(--accent2);border-radius:50%}
-.cal-day.inactive{opacity:0.3;cursor:default}
-
-/* ===== GENERATED DOCS ===== */
-.doc-preview{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;font-size:0.83rem;line-height:1.9;position:relative}
-.doc-preview h1{font-size:1.2rem;font-weight:800;margin-bottom:12px;color:var(--text);font-family:'DM Serif Display',serif}
-.doc-preview h2{font-size:1rem;font-weight:700;margin:16px 0 8px;color:var(--primary);border-bottom:1.5px solid var(--primary-light);padding-bottom:4px}
-.doc-preview h3{font-size:0.9rem;font-weight:700;margin:12px 0 6px;color:var(--text)}
-.doc-preview p{margin-bottom:8px;color:var(--text2)}
-.doc-preview ul,.doc-preview ol{padding-left:20px;margin-bottom:8px;color:var(--text2)}
-.doc-preview li{margin-bottom:3px}
-.doc-preview table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.8rem}
-.doc-preview th{background:var(--primary);color:#fff;padding:8px 12px;text-align:left;font-weight:600}
-.doc-preview td{padding:7px 12px;border:1px solid var(--border)}
-.doc-preview tr:nth-child(even) td{background:var(--bg2)}
-.doc-header-info{background:var(--bg2);border-radius:8px;padding:12px 16px;margin-bottom:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;font-size:0.78rem}
-.doc-header-info strong{color:var(--text2);font-weight:600}
-
-/* ===== OVERLAY SIDEBAR ===== */
-.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:190;display:none}
-.sidebar-overlay.show{display:block}
-
-/* ===== GRID LAYOUTS ===== */
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
-
-/* ===== EMPTY STATE ===== */
-.empty-state{text-align:center;padding:48px 24px;color:var(--text3)}
-.empty-state .es-icon{font-size:3.5rem;margin-bottom:16px;opacity:0.4}
-.empty-state .es-title{font-size:1rem;font-weight:700;color:var(--text2);margin-bottom:6px}
-.empty-state .es-sub{font-size:0.82rem}
-
-/* ===== LOADING ===== */
-.skeleton{background:linear-gradient(90deg,var(--bg2) 25%,var(--bg) 50%,var(--bg2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:6px}
-@keyframes shimmer{to{background-position:-200% 0}}
-
-/* ===== DARK MODE TOGGLE ===== */
 .dark-toggle{display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--text2);cursor:pointer;padding:6px 10px;border-radius:8px;transition:background var(--transition)}
-.dark-toggle:hover{background:var(--bg2)}
-.toggle-track{width:36px;height:20px;border-radius:20px;background:var(--border2);position:relative;transition:background var(--transition);flex-shrink:0}
+.toggle-track{width:36px;height:20px;border-radius:20px;background:var(--border2);position:relative;flex-shrink:0}
 .toggle-track.on{background:var(--primary)}
 .toggle-thumb{width:14px;height:14px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:transform var(--transition);box-shadow:0 1px 4px rgba(0,0,0,0.2)}
 .toggle-track.on .toggle-thumb{transform:translateX(16px)}
 
-/* ===== PRINT ===== */
+/* Progress Step Bar */
+.step-progress{display:flex;align-items:center;margin-bottom:24px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
+.step-progress::-webkit-scrollbar{display:none}
+.step-item{display:flex;align-items:center;flex-shrink:0}
+.step-circle{width:28px;height:28px;border-radius:50%;background:var(--bg2);color:var(--text3);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;border:2px solid var(--border)}
+.step-label{font-size:0.75rem;font-weight:700;color:var(--text3);margin-left:8px;white-space:nowrap}
+.step-line{height:3px;width:30px;background:var(--border);margin:0 10px}
+.step-item.active .step-circle{background:var(--primary);color:#fff;border-color:var(--primary)}
+.step-item.active .step-label{color:var(--text)}
+.step-item.done .step-circle{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+.step-item.done .step-line{background:var(--accent2)}
+
 @media print{
-  #sidebar,#header,#ai-panel,#toast-container,.wizard-wrap,.btn-group,.no-print{display:none!important}
+  #sidebar,#header,.breadcrumb,.page-header:not(.print-only),.card-title,.btn-group,.tabs,.step-progress,.no-print{display:none!important}
   #main-area{margin-left:0!important}
   #main-content{padding:0!important}
+  .card{border:none!important;box-shadow:none!important;padding:0!important;margin:0!important}
+  .doc-preview{border:none!important;box-shadow:none!important;padding:0!important}
 }
 
-/* ===== RESPONSIVE ===== */
-@media(max-width:1100px){
-  #ai-panel{display:none}
-  .ai-panel-open #ai-panel{display:flex;position:fixed;right:0;top:0;height:100vh;z-index:300}
-  .ai-close-btn{display:flex!important}
-}
 @media(max-width:768px){
   :root{--sidebar-w:260px}
   #sidebar{transform:translateX(-100%)}
   #sidebar.open{transform:translateX(0)}
   #main-area{margin-left:0}
   .header-menu-btn{display:flex}
-  .grid2,.grid3,.form-row,.form-row3{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .wizard-grid{grid-template-columns:repeat(2,1fr)}
-  #main-content{padding:14px}
-  .page-title{font-size:1.2rem}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .doc-header-info strong{width:auto;display:block;margin-bottom:2px}
 }
-@media(max-width:480px){
-  .stats-grid{grid-template-columns:1fr 1fr}
-  .wizard-grid{grid-template-columns:1fr 1fr}
-  #bottom-nav{display:flex}
-  #main-content{padding-bottom:70px}
-}
-#bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1.5px solid var(--border);z-index:200;height:56px;align-items:center}
-.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:0.6rem;font-weight:600;color:var(--text3);cursor:pointer;padding:6px 0;transition:color var(--transition)}
-.bn-item.active{color:var(--primary)}
-.bn-item .bn-ico{font-size:1.2rem}
 </style>
 </head>
 <body>
 
-<!-- Toast Container -->
 <div id="toast-container"></div>
-
-<!-- Sidebar Overlay -->
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar(false)"></div>
-
-<!-- Modal -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
-  <div class="modal" id="modal-box" onclick="event.stopPropagation()">
-    <div class="modal-header">
-      <div class="modal-title" id="modal-title">Modal</div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div id="modal-body"></div>
-    <div class="btn-group" id="modal-footer" style="margin-top:18px;justify-content:flex-end"></div>
-  </div>
-</div>
 
 <div id="app">
   <!-- SIDEBAR -->
@@ -381,71 +243,65 @@ tr:hover td{background:var(--primary-light)}
       <div class="logo-icon">🎓</div>
       <div>
         <div class="logo-text">EduPlan AI</div>
-        <div class="logo-sub">Platform Pembelajaran Terintegrasi</div>
+        <div class="logo-sub">Alur Terintegrasi</div>
       </div>
     </div>
-
-    <div class="sidebar-search">
-      <div class="search-wrap">
-        <span class="s-ico">🔍</span>
-        <input type="text" placeholder="Cari menu..." id="nav-search" oninput="filterNav(this.value)">
-      </div>
-    </div>
-
     <nav class="sidebar-nav" id="sidebar-nav">
-      <div class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')">
+      <div class="nav-item active" data-page="dashboard" data-step="0" onclick="navigate('dashboard')">
         <span class="n-ico">📊</span> Dashboard
       </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Perencanaan</div>
-        <div class="nav-item" data-page="ape" onclick="navigate('ape')"><span class="n-ico">📅</span>Analisis Pekan Efektif</div>
-        <div class="nav-item" data-page="cp" onclick="navigate('cp')"><span class="n-ico">📖</span>Analisis CP</div>
-        <div class="nav-item" data-page="tp" onclick="navigate('tp')"><span class="n-ico">🎯</span>Tujuan Pembelajaran</div>
-        <div class="nav-item" data-page="atp" onclick="navigate('atp')"><span class="n-ico">🗺️</span>ATP</div>
-        <div class="nav-item" data-page="prota" onclick="navigate('prota')"><span class="n-ico">📆</span>Program Tahunan</div>
-        <div class="nav-item" data-page="promes" onclick="navigate('promes')"><span class="n-ico">🗓️</span>Program Semester</div>
+      
+      <div class="nav-section-title" style="margin-top:10px">ALUR PENGERJAAN</div>
+      
+      <div class="nav-item" data-page="data_master" data-step="1" onclick="navigate('data_master')">
+        <span class="n-ico">⚙️</span> 1. Data Master
+        <span class="lock-icon">🔒</span><span class="check-icon">✓</span>
       </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Pembelajaran</div>
-        <div class="nav-item" data-page="rpm" onclick="navigate('rpm')"><span class="n-ico">📝</span>RPM / Modul Ajar</div>
-        <div class="nav-item" data-page="lkpd" onclick="navigate('lkpd')"><span class="n-ico">📋</span>LKPD</div>
+      <div class="nav-item locked" data-page="ape" data-step="2" onclick="navigate('ape')">
+        <span class="n-ico">📅</span> 2. Analisis Pekan Efektif
+        <span class="lock-icon">🔒</span><span class="check-icon">✓</span>
       </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Penilaian</div>
-        <div class="nav-item" data-page="kisi" onclick="navigate('kisi')"><span class="n-ico">📌</span>Kisi-kisi Soal</div>
-        <div class="nav-item" data-page="kartusoal" onclick="navigate('kartusoal')"><span class="n-ico">🃏</span>Kartu Soal</div>
-        <div class="nav-item" data-page="banksoal" onclick="navigate('banksoal')"><span class="n-ico">🏦</span>Bank Soal</div>
-        <div class="nav-item" data-page="kktp" onclick="navigate('kktp')"><span class="n-ico">🏆</span>KKTP</div>
-        <div class="nav-item" data-page="rubrik" onclick="navigate('rubrik')"><span class="n-ico">📏</span>Rubrik Penilaian</div>
-        <div class="nav-item" data-page="rekapnilai" onclick="navigate('rekapnilai')"><span class="n-ico">📊</span>Rekap Nilai</div>
+      <div class="nav-item locked" data-page="cp" data-step="3" onclick="navigate('cp')">
+        <span class="n-ico">📖</span> 3. Analisis CP & TP
+        <span class="lock-icon">🔒</span><span class="check-icon">✓</span>
       </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Tindak Lanjut</div>
-        <div class="nav-item" data-page="remedial" onclick="navigate('remedial')"><span class="n-ico">🔄</span>Program Remedial</div>
-        <div class="nav-item" data-page="pengayaan" onclick="navigate('pengayaan')"><span class="n-ico">⭐</span>Program Pengayaan</div>
-        <div class="nav-item" data-page="analisis" onclick="navigate('analisis')"><span class="n-ico">🔬</span>Analisis Hasil Belajar</div>
+      <div class="nav-item locked" data-page="atp" data-step="4" onclick="navigate('atp')">
+        <span class="n-ico">🗺️</span> 4. Alur Tujuan (ATP)
+        <span class="lock-icon">🔒</span><span class="check-icon">✓</span>
       </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title">Laporan & Pengaturan</div>
-        <div class="nav-item" data-page="laporan" onclick="navigate('laporan')"><span class="n-ico">📤</span>Ekspor Laporan</div>
-        <div class="nav-item" data-page="pengaturan" onclick="navigate('pengaturan')"><span class="n-ico">⚙️</span>Pengaturan</div>
+      <div class="nav-item locked" data-page="prota" data-step="5" onclick="navigate('prota')">
+        <span class="n-ico">📆</span> 5. Program Tahunan
+        <span class="lock-icon">🔒</span><span class="check-icon">✓</span>
+      </div>
+      <div class="nav-item locked" data-page="promes" data-step="6" onclick="navigate('promes')">
+        <span class="n-ico">🗓️</span> 6. Program Semester
+        <span class="lock-icon">🔒</span><span class="check-icon">✓</span>
+      </div>
+      <div class="nav-item locked" data-page="rpm" data-step="7" onclick="navigate('rpm')">
+        <span class="n-ico">📝</span> 7. Modul Ajar (RPM)
+        <span class="lock-icon">🔒</span><span class="check-icon">✓</span>
+      </div>
+      <div class="nav-item locked" data-page="lkpd" data-step="8" onclick="navigate('lkpd')">
+        <span class="n-ico">📋</span> 8. LKPD
+        <span class="lock-icon">🔒</span><span class="check-icon">✓</span>
+      </div>
+      <div class="nav-item locked" data-page="kisi" data-step="9" onclick="navigate('kisi')">
+        <span class="n-ico">📌</span> 9. Kisi-kisi Soal
+        <span class="lock-icon">🔒</span><span class="check-icon">✓</span>
+      </div>
+      <div class="nav-item locked" data-page="rubrik" data-step="10" onclick="navigate('rubrik')">
+        <span class="n-ico">📏</span> 10. Rubrik & KKTP
+        <span class="lock-icon">🔒</span><span class="check-icon">✓</span>
       </div>
     </nav>
-
     <div class="sidebar-footer">
       <div class="dark-toggle" onclick="toggleDark()">
-        <div class="toggle-track" id="dark-toggle-track"><div class="toggle-thumb"></div></div>
-        <span id="dark-label">Mode Terang</span>
+        <div class="toggle-track" id="dark-toggle-track"><div class="toggle-thumb"></div></div><span id="dark-label">Mode Terang</span>
       </div>
       <div class="user-card">
         <div class="user-avatar">G</div>
         <div class="user-info">
-          <div class="user-name">Guru Profesional</div>
+          <div class="user-name" id="sb-user-name">Guru Profesional</div>
           <div class="user-role">Administrator</div>
         </div>
       </div>
@@ -454,1586 +310,833 @@ tr:hover td{background:var(--primary-light)}
 
   <!-- MAIN AREA -->
   <div id="main-area">
-    <!-- HEADER -->
     <header id="header">
       <button class="header-menu-btn" onclick="toggleSidebar(true)">☰</button>
       <div class="header-title" id="header-title">Dashboard <span>EduPlan AI</span></div>
       <div class="header-actions">
-        <button class="h-btn notif-btn" onclick="showNotif()" title="Notifikasi">🔔<span class="notif-dot"></span></button>
-        <button class="h-btn" onclick="showAiPanel()" title="AI Assistant">🤖</button>
         <button class="h-btn" onclick="window.print()" title="Cetak">🖨️</button>
-        <button class="h-btn" onclick="navigate('pengaturan')" title="Pengaturan">⚙️</button>
       </div>
     </header>
-
     <div id="content-area">
-      <!-- MAIN CONTENT -->
       <main id="main-content">
         <div id="page-container"></div>
       </main>
-
-      <!-- AI PANEL -->
-      <aside id="ai-panel">
-        <div class="ai-panel-header">
-          <div class="ai-logo">🤖</div>
-          <div>
-            <div class="ai-title">AI Assistant</div>
-            <div class="ai-status">● Siap Membantu</div>
-          </div>
-          <button class="ai-close-btn" onclick="hideAiPanel()">✕</button>
-        </div>
-        <div class="ai-body" id="ai-body">
-          <div class="ai-section">
-            <div class="ai-section-title">Generate Cepat</div>
-            <div class="ai-item" onclick="aiGenerate('atp')">
-              <div class="ai-item-title">🗺️ Generate ATP</div>
-              <div class="ai-item-desc">Buat Alur Tujuan Pembelajaran otomatis</div>
-            </div>
-            <div class="ai-item" onclick="aiGenerate('rpm')">
-              <div class="ai-item-title">📝 Generate RPM Lengkap</div>
-              <div class="ai-item-desc">Modul ajar sesuai BSKAP terbaru</div>
-            </div>
-            <div class="ai-item" onclick="aiGenerate('lkpd')">
-              <div class="ai-item-title">📋 Generate LKPD</div>
-              <div class="ai-item-desc">Lembar kerja peserta didik otomatis</div>
-            </div>
-            <div class="ai-item" onclick="aiGenerate('soal')">
-              <div class="ai-item-title">🏦 Generate Bank Soal</div>
-              <div class="ai-item-desc">Soal HOTS + LOTS + AKM Style</div>
-            </div>
-            <div class="ai-item" onclick="aiGenerate('rubrik')">
-              <div class="ai-item-title">📏 Generate Rubrik Penilaian</div>
-              <div class="ai-item-desc">Rubrik lengkap + KKTP</div>
-            </div>
-          </div>
-          <div class="ai-section">
-            <div class="ai-section-title">Konteks Aktif</div>
-            <div id="ai-context-display" style="font-size:0.78rem;color:var(--text2);line-height:1.7">
-              Belum ada data. Isi Wizard Generator terlebih dahulu.
-            </div>
-          </div>
-          <div id="ai-output" class="ai-output"></div>
-        </div>
-      </aside>
     </div>
-
-    <!-- BOTTOM NAV (mobile) -->
-    <nav id="bottom-nav">
-      <div class="bn-item active" onclick="navigate('dashboard')"><span class="bn-ico">📊</span>Dashboard</div>
-      <div class="bn-item" onclick="navigate('rpm')"><span class="bn-ico">📝</span>RPM</div>
-      <div class="bn-item" onclick="navigate('banksoal')"><span class="bn-ico">🏦</span>Soal</div>
-      <div class="bn-item" onclick="showAiPanel()"><span class="bn-ico">🤖</span>AI</div>
-      <div class="bn-item" onclick="navigate('pengaturan')"><span class="bn-ico">⚙️</span>Setelan</div>
-    </nav>
   </div>
 </div>
 
 <script>
-/* ========== STATE ========== */
+/* ========== GLOBAL STATE ========== */
+const DB_KEY = 'eduplan_ai_sequential_v4';
+const STEP_MAP = {
+  'data_master': 1, 'ape': 2, 'cp': 3, 'atp': 4, 'prota': 5, 
+  'promes': 6, 'rpm': 7, 'lkpd': 8, 'kisi': 9, 'rubrik': 10
+};
+const STEP_NAMES = ['','Data Master','Pekan Efektif','Analisis CP & TP','ATP','Prota','Promes','Modul Ajar','LKPD','Kisi-kisi','Rubrik'];
+
 const STATE = {
   currentPage: 'dashboard',
+  progressLevel: 1, // Determines highest unlocked step
   dark: false,
-  context: {
-    jenjang: '', fase: '', kelas: '', mapel: '', semester: '', tahun: ''
+  master: {
+    penyusun: '', kepsek: '', sekolah: '', tahun: '2024/2025', semester: '1',
+    mapel: '', kelas: '', fase: 'Fase D', waktu: '2 x 40 Menit', topik: '',
+    targetSiswa: 'Reguler / Tipikal', profilPancasila: ['Bernalar Kritis', 'Kreatif', 'Mandiri'],
+    minatBelajar: '', lingkunganBelajar: '',
+    strategi: 'Project Based Learning (PjBL)', platform: 'Quizizz / Kertas',
+    sarpras: 'Laptop, Proyektor, Papan Tulis', pemantik: '',
+    cpList: [''],
+    pekanEfektif: 0, totalJP: 0
   },
   data: {
-    atp: [], prota: [], promes: [], rpm: [], lkpd: [], soal: [], nilai: []
+    tps: [] // Will store generated TPs to ensure consistency across steps
   }
 };
 
-const DB_KEY = 'eduplan_ai_v1';
-
+/* ========== PERSISTENCE ========== */
 function saveState(){
-  try{localStorage.setItem(DB_KEY, JSON.stringify(STATE))}catch(e){}
+  try{ localStorage.setItem(DB_KEY, JSON.stringify(STATE)); } catch(e){}
 }
 function loadState(){
   try{
     const s = localStorage.getItem(DB_KEY);
     if(s){
       const d = JSON.parse(s);
-      if(d.context) STATE.context = {...STATE.context,...d.context};
-      if(d.data) STATE.data = {...STATE.data,...d.data};
+      if(d.master) STATE.master = {...STATE.master, ...d.master};
+      if(d.data) STATE.data = {...STATE.data, ...d.data};
+      if(d.progressLevel) STATE.progressLevel = d.progressLevel;
       if(d.dark !== undefined) STATE.dark = d.dark;
     }
   }catch(e){}
 }
 
-/* ========== KNOWLEDGE BASE ========== */
-const KB = {
-  cp: {
-    SD: {
-      "Fase A": {
-        "Bahasa Indonesia": "Peserta didik memiliki kemampuan berbahasa untuk berkomunikasi dan bernalar sesuai dengan tujuan, konteks sosial, dan akademis. Mereka mampu berinteraksi dengan bahasa Indonesia; memahami dan menyampaikan gagasan dari teks informatif; serta mengungkapkan gagasan dalam kerja dan diskusi kelompok.",
-        "Matematika": "Peserta didik dapat melakukan operasi aritmetika pada bilangan cacah dan mengenali bentuk-bentuk geometri sederhana, serta menerapkan pengetahuan tersebut dalam kehidupan sehari-hari.",
-        "IPAS": "Peserta didik mengenal dan memahami alam dan lingkungan sekitarnya melalui pengamatan sederhana, serta dapat menceritakan pengalamannya berinteraksi dengan lingkungan."
-      },
-      "Fase B": {
-        "Bahasa Indonesia": "Peserta didik memiliki kemampuan berbahasa untuk berkomunikasi dan bernalar sesuai tujuan kepada teman sebaya dan orang dewasa. Mereka memahami dan menyampaikan pesan; mengungkapkan perasaan berdasarkan fakta, imajinasi untuk menyampaikan karakteristik, pengalaman, dan pesan dengan beberapa struktur genre teks.",
-        "Matematika": "Peserta didik dapat menggunakan konsep lebih besar dari, kurang dari, dan sama dengan untuk membandingkan bilangan bulat, menghitung hasil penjumlahan, pengurangan, perkalian, dan pembagian bilangan cacah.",
-        "IPAS": "Peserta didik mengidentifikasi keterkaitan antara pengetahuan-pengetahuan yang baru saja diperoleh serta mencari tahu bagaimana konsep-konsep ilmu pengetahuan berkaitan satu sama lain."
-      },
-      "Fase C": {
-        "Bahasa Indonesia": "Peserta didik memiliki kemampuan berbahasa untuk berkomunikasi dan bernalar sesuai dengan tujuan, konteks sosial, akademis, dan komunitas abstrak. Mereka mampu memahami, mengolah, menginterpretasikan, dan mengevaluasi informasi dari berbagai tipe teks tentang topik yang beragam.",
-        "Matematika": "Peserta didik dapat menyelesaikan masalah yang berkaitan dengan pecahan dan desimal, serta menyelesaikan permasalahan berkaitan dengan rasio dan proporsi.",
-        "IPAS": "Peserta didik mengidentifikasi dan mengajukan pertanyaan tentang apa yang ada pada diri dan lingkungan yang lebih jauh, melalui pengamatan dan eksplorasi."
-      }
-    },
-    SMP: {
-      "Fase D": {
-        "Bahasa Indonesia": "Peserta didik memiliki kemampuan berbahasa untuk berkomunikasi dan bernalar sesuai dengan tujuan, konteks sosial, akademis, dan komunitas abstrak. Mereka mampu memahami, mengolah, menginterpretasikan, dan mengevaluasi teks dari berbagai tipe.",
-        "Matematika": "Peserta didik dapat memahami bilangan real dan operasinya, serta menyelesaikan persamaan linear satu variabel. Peserta didik dapat menggunakan pemikiran matematika untuk menyelesaikan masalah nyata.",
-        "IPA": "Peserta didik mampu mengidentifikasi, mengajukan pertanyaan ilmiah, dan memahami hubungan konsep-konsep dalam ilmu pengetahuan alam.",
-        "IPS": "Peserta didik mampu memahami konsep dasar ilmu sosial dan menggunakannya untuk menganalisis fenomena sosial di lingkungan sekitarnya.",
-        "Bahasa Inggris": "Peserta didik menggunakan bahasa Inggris untuk berkomunikasi dalam konteks yang berkaitan dengan kehidupan sehari-hari dan topik yang diminati."
-      }
-    },
-    SMA: {
-      "Fase E": {
-        "Bahasa Indonesia": "Peserta didik memiliki kemampuan berbahasa untuk berkomunikasi dan bernalar sesuai tujuan, konteks sosial, akademis, dan komunitas abstrak tingkat lanjut.",
-        "Matematika": "Peserta didik dapat menerapkan konsep-konsep matematika untuk memecahkan masalah-masalah kontekstual. Termasuk konsep fungsi, statistika, peluang, dan geometri.",
-        "Fisika": "Peserta didik mampu menerapkan pemikiran dan cara kerja ilmiah untuk mengidentifikasi variabel dan mendeskripsikan hubungan antar variabel fisis.",
-        "Kimia": "Peserta didik mampu mengamati, menyelidiki dan menjelaskan fenomena sesuai kaidah kerja ilmiah; menjelaskan fenomena-fenomena yang terjadi di lingkungan sekitarnya.",
-        "Biologi": "Peserta didik memiliki kemampuan menciptakan solusi atas permasalahan-permasalahan berdasarkan isu lokal, nasional atau global terkait pemahaman keanekaragaman makhluk hidup dan peranannya.",
-        "Sejarah": "Peserta didik mampu menganalisis serta mengevaluasi berbagai peristiwa sejarah yang terjadi di Indonesia dan dunia dengan menggunakan keterampilan sejarah.",
-        "Bahasa Inggris": "Peserta didik berkomunikasi dalam bahasa Inggris dengan fasih dan spontan dalam berbagai konteks kehidupan nyata."
-      },
-      "Fase F": {
-        "Matematika": "Peserta didik dapat menerapkan konsep matematika tingkat lanjut, termasuk kalkulus, aljabar linear, dan statistika untuk memecahkan masalah kompleks.",
-        "Fisika": "Peserta didik mampu menganalisis fenomena fisika kompleks dan menerapkan hukum-hukum fisika dalam berbagai konteks.",
-        "Kimia": "Peserta didik mampu menganalisis hubungan antara konsep-konsep kimia dengan berbagai fenomena dan menerapkan pengetahuan kimia untuk menyelesaikan permasalahan.",
-        "Biologi": "Peserta didik mampu menganalisis hubungan antar konsep biologi secara mendalam dan menghubungkannya dengan isu-isu global.",
-        "Bahasa Indonesia": "Peserta didik memiliki kemampuan berbahasa tingkat tinggi untuk menghasilkan teks yang mampu mempengaruhi, meyakinkan, dan menginspirasi.",
-        "Bahasa Inggris": "Peserta didik berkomunikasi dalam berbagai teks bahasa Inggris yang kompleks secara efektif."
-      }
-    }
-  },
-  
-  generateTP(cp, mapel, kelas){
-    const tps = [];
-    const aktKata = ['Mengidentifikasi','Menjelaskan','Menganalisis','Menerapkan','Mengevaluasi','Menciptakan','Membandingkan','Mendemonstrasikan','Memecahkan','Merancang','Mengkomunikasikan','Menyimpulkan'];
-    const aspek = cp.split('.').filter(s=>s.trim().length>10);
-    aspek.forEach((a,i)=>{
-      const kata = aktKata[i % aktKata.length];
-      const isi = a.trim().split(' ').slice(0,8).join(' ');
-      tps.push({
-        kode: `TP-${String(i+1).padStart(2,'0')}`,
-        deskripsi: `${kata} ${isi.toLowerCase()}...`,
-        dimensi: ['Beriman','Berkebinekaan','Mandiri','Bernalar Kritis','Kreatif','Gotong Royong'][i%6],
-        bloom: ['C1 Mengingat','C2 Memahami','C3 Menerapkan','C4 Menganalisis','C5 Mengevaluasi','C6 Mencipta'][Math.min(i,5)]
-      });
-    });
-    if(tps.length < 4){
-      for(let i=tps.length;i<6;i++){
-        tps.push({
-          kode:`TP-${String(i+1).padStart(2,'0')}`,
-          deskripsi:`${aktKata[i%aktKata.length]} konsep ${mapel} kelas ${kelas} dengan tepat`,
-          dimensi:['Bernalar Kritis','Kreatif','Mandiri'][i%3],
-          bloom:['C3 Menerapkan','C4 Menganalisis','C5 Mengevaluasi'][i%3]
-        });
-      }
-    }
-    return tps;
-  },
-
-  generateSoal(mapel, kelas, tp, jenis, jumlah=5){
-    const soalDB = {
-      pg: [
-        {soal:`Manakah pernyataan yang paling tepat mengenai konsep dasar ${mapel}?`,opsi:['A. Pernyataan pertama yang benar','B. Pernyataan kedua dengan penjelasan','C. Jawaban yang tepat dengan alasan kuat','D. Pernyataan keempat'],kunci:'C',skor:1},
-        {soal:`Dalam konteks pembelajaran ${mapel} kelas ${kelas}, apa yang dimaksud dengan konsep utama?`,opsi:['A. Definisi sederhana','B. Definisi kompleks dan mendalam','C. Pengertian yang sesuai konteks','D. Istilah teknis'],kunci:'C',skor:1},
-        {soal:`Peserta didik menganalisis situasi berikut terkait ${mapel}. Apa kesimpulan yang paling tepat?`,opsi:['A. Kesimpulan awal','B. Kesimpulan berdasarkan data','C. Kesimpulan yang tepat dan logis','D. Kesimpulan tanpa dasar'],kunci:'C',skor:1},
-        {soal:`Dalam kehidupan nyata, penerapan ${mapel} sangat penting karena...`,opsi:['A. Menambah wawasan saja','B. Tidak memiliki manfaat nyata','C. Membantu memecahkan masalah kontekstual','D. Hanya berlaku di sekolah'],kunci:'C',skor:1},
-        {soal:`HOTS: Jika peserta didik dihadapkan pada masalah nyata tentang ${mapel}, langkah pertama yang paling efektif adalah...`,opsi:['A. Langsung mengerjakan','B. Mengidentifikasi masalah dan mengumpulkan data','C. Meminta bantuan orang lain','D. Mengabaikan masalah'],kunci:'B',skor:1},
-      ],
-      uraian: [
-        {soal:`Jelaskan secara komprehensif tentang konsep utama dalam ${mapel} kelas ${kelas}! Sertakan contoh dan penerapannya dalam kehidupan sehari-hari.`,kunci:'Jawaban mencakup: definisi konsep, ciri-ciri, contoh konkret, dan relevansi dalam kehidupan. Skor maksimal jika memenuhi semua aspek.',skor:20},
-        {soal:`Analisislah hubungan antara materi ${mapel} yang dipelajari dengan fenomena yang terjadi di lingkungan sekitar Anda!`,kunci:'Jawaban mencakup: identifikasi fenomena, hubungan dengan teori, analisis kritis, dan kesimpulan yang logis.',skor:20},
-        {soal:`Rancanglah sebuah solusi untuk permasalahan nyata menggunakan konsep ${mapel} yang telah Anda pelajari!`,kunci:'Jawaban mencakup: identifikasi masalah, pemilihan konsep yang tepat, langkah-langkah solusi, dan evaluasi.',skor:20},
-      ],
-      isian: [
-        {soal:`Konsep utama dalam ${mapel} yang berkaitan dengan TP ${tp} disebut __________.`,kunci:'istilah/konsep yang relevan',skor:5},
-        {soal:`Prinsip dasar yang menjelaskan fenomena dalam ${mapel} adalah __________.`,kunci:'prinsip relevan',skor:5},
-        {soal:`Hubungan antara dua variabel dalam ${mapel} dapat dijelaskan dengan hukum __________.`,kunci:'hukum/aturan relevan',skor:5},
-      ]
-    };
-    const tipe = jenis === 'Pilihan Ganda' ? 'pg' : jenis === 'Uraian' ? 'uraian' : 'isian';
-    const arr = soalDB[tipe] || soalDB.pg;
-    return Array.from({length:Math.min(jumlah,arr.length)},(_,i)=>({...arr[i],nomor:i+1,tp,jenis}));
-  }
-};
-
-/* ========== ROUTER ========== */
+/* ========== ROUTER & NAVIGATION ========== */
 const PAGES = {
   dashboard: renderDashboard,
+  data_master: renderDataMaster,
   ape: renderAPE,
-  cp: renderCP,
-  tp: renderTP,
+  cp: renderAnalisisCP,
   atp: renderATP,
   prota: renderProta,
   promes: renderPromes,
   rpm: renderRPM,
   lkpd: renderLKPD,
-  kisi: renderKisi,
-  kartusoal: renderKartuSoal,
-  banksoal: renderBankSoal,
-  kktp: renderKKTP,
-  rubrik: renderRubrik,
-  rekapnilai: renderRekapNilai,
-  remedial: renderRemedial,
-  pengayaan: renderPengayaan,
-  analisis: renderAnalisis,
-  laporan: renderLaporan,
-  pengaturan: renderPengaturan
+  kisi: renderKisiSoal,
+  rubrik: renderRubrik
 };
 
 function navigate(page){
+  // Cek apakah step terkunci
+  if(page !== 'dashboard') {
+    const requiredLevel = STEP_MAP[page];
+    if(requiredLevel > STATE.progressLevel) {
+      toast(`Tahap ${requiredLevel} (${STEP_NAMES[requiredLevel]}) terkunci! Selesaikan tahap sebelumnya.`, 'warn');
+      return;
+    }
+  }
+
   STATE.currentPage = page;
-  document.querySelectorAll('.nav-item').forEach(el=>{
+  
+  // Update Active Menu
+  document.querySelectorAll('.nav-item').forEach(el => {
     el.classList.toggle('active', el.dataset.page === page);
   });
-  document.querySelectorAll('.bn-item').forEach((el,i)=>{
-    el.classList.remove('active');
-  });
+  updateSidebarLocks();
+
   const titles = {
-    dashboard:'Dashboard', ape:'Analisis Pekan Efektif', cp:'Analisis Capaian Pembelajaran',
-    tp:'Tujuan Pembelajaran', atp:'Alur Tujuan Pembelajaran', prota:'Program Tahunan',
-    promes:'Program Semester', rpm:'RPM / Modul Ajar', lkpd:'LKPD',
-    kisi:'Kisi-kisi Soal', kartusoal:'Kartu Soal', banksoal:'Bank Soal',
-    kktp:'KKTP', rubrik:'Rubrik Penilaian', rekapnilai:'Rekap Nilai',
-    remedial:'Program Remedial', pengayaan:'Program Pengayaan', analisis:'Analisis Hasil Belajar',
-    laporan:'Ekspor Laporan', pengaturan:'Pengaturan'
+    dashboard:'Dashboard', data_master:'1. Data Master', ape: '2. Pekan Efektif', 
+    cp:'3. Analisis CP & TP', atp:'4. Alur Tujuan Pembelajaran', prota:'5. Program Tahunan',
+    promes: '6. Program Semester', rpm:'7. Modul Ajar (RPM)', lkpd:'8. LKPD', 
+    kisi:'9. Kisi-kisi Soal', rubrik:'10. Rubrik & KKTP'
   };
-  document.getElementById('header-title').innerHTML = `${titles[page]||page} <span>EduPlan AI</span>`;
+  document.getElementById('header-title').innerHTML = `${titles[page]} <span>EduPlan AI</span>`;
+  
   const container = document.getElementById('page-container');
-  container.innerHTML = '';
-  if(PAGES[page]) container.innerHTML = PAGES[page]();
+  container.innerHTML = PAGES[page] ? PAGES[page]() : '<h1>Page Not Found</h1>';
+  
+  if(STATE.master.penyusun) document.getElementById('sb-user-name').textContent = STATE.master.penyusun;
+  
   toggleSidebar(false);
-  updateAiContext();
   saveState();
+  window.scrollTo(0,0);
 }
 
-/* ========== SIDEBAR TOGGLE ========== */
+function completeStep(currentStep, nextPageStr) {
+  if (STATE.progressLevel <= currentStep) {
+    STATE.progressLevel = currentStep + 1; // Buka tahap berikutnya
+  }
+  saveState();
+  toast('Tahap selesai & disimpan! Melanjutkan...', 'success');
+  setTimeout(() => navigate(nextPageStr), 500);
+}
+
+function updateSidebarLocks() {
+  document.querySelectorAll('.nav-item').forEach(el => {
+    const step = parseInt(el.dataset.step) || 0;
+    if(step > 0) {
+      if(step > STATE.progressLevel) {
+        el.classList.add('locked');
+        el.classList.remove('completed');
+      } else if (step < STATE.progressLevel) {
+        el.classList.remove('locked');
+        el.classList.add('completed');
+      } else {
+        el.classList.remove('locked');
+        el.classList.remove('completed');
+      }
+    }
+  });
+}
+
+function renderProgressBar(currentStep) {
+  let html = `<div class="step-progress no-print">`;
+  for(let i=1; i<=10; i++) {
+    let statCls = '';
+    if(i < currentStep) statCls = 'done';
+    else if(i === currentStep) statCls = 'active';
+    
+    html += `
+      <div class="step-item ${statCls}">
+        <div class="step-circle">${i < currentStep ? '✓' : i}</div>
+        <div class="step-label" style="display:${statCls==='done'?'none':'block'}">${STEP_NAMES[i]}</div>
+        ${i < 10 ? `<div class="step-line"></div>` : ''}
+      </div>
+    `;
+  }
+  html += `</div>`;
+  return html;
+}
+
+/* ========== UTILITIES ========== */
 function toggleSidebar(open){
   const sb = document.getElementById('sidebar');
   const ov = document.getElementById('sidebar-overlay');
   if(window.innerWidth<=768){
-    if(open===undefined) open=!sb.classList.contains('open');
-    sb.classList.toggle('open',open);
-    ov.classList.toggle('show',open);
+    sb.classList.toggle('open', open);
+    ov.classList.toggle('show', open);
   }
 }
 
-/* ========== DARK MODE ========== */
 function toggleDark(){
   STATE.dark = !STATE.dark;
   document.body.dataset.dark = STATE.dark;
-  const t = document.getElementById('dark-toggle-track');
-  const l = document.getElementById('dark-label');
-  t.classList.toggle('on',STATE.dark);
-  l.textContent = STATE.dark ? 'Mode Gelap' : 'Mode Terang';
+  document.getElementById('dark-toggle-track').classList.toggle('on', STATE.dark);
+  document.getElementById('dark-label').textContent = STATE.dark ? 'Mode Gelap' : 'Mode Terang';
   saveState();
 }
 
-/* ========== TOAST ========== */
-function toast(msg, type='info', dur=3000){
+function toast(msg, type='info'){
   const c = document.getElementById('toast-container');
-  const icons = {info:'ℹ️',success:'✅',error:'❌',warn:'⚠️'};
+  const icons = {info:'ℹ️',success:'✅',error:'❌',warn:'🔒'};
   const el = document.createElement('div');
   el.className = `toast toast-${type}`;
-  el.innerHTML = `<span>${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+  el.innerHTML = `<span>${icons[type]}</span><span>${msg}</span>`;
   c.appendChild(el);
-  setTimeout(()=>{el.style.animation='slideOut 0.3s ease forwards';setTimeout(()=>el.remove(),300)},dur);
+  setTimeout(()=>{ el.style.animation='slideOut 0.3s ease forwards'; setTimeout(()=>el.remove(),300); }, 3000);
 }
 
-/* ========== MODAL ========== */
-function openModal(title, body, footer=''){
-  document.getElementById('modal-title').textContent = title;
-  document.getElementById('modal-body').innerHTML = body;
-  document.getElementById('modal-footer').innerHTML = footer;
-  document.getElementById('modal-overlay').classList.add('open');
-}
-function closeModal(){
-  document.getElementById('modal-overlay').classList.remove('open');
+function switchTab(el, tabId){
+  const container = el.closest('.card') || el.closest('#rpm-container');
+  container.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  container.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
 }
 
-/* ========== AI PANEL ========== */
-function showAiPanel(){
-  document.getElementById('app').classList.add('ai-panel-open');
-}
-function hideAiPanel(){
-  document.getElementById('app').classList.remove('ai-panel-open');
-}
-function updateAiContext(){
-  const ctx = STATE.context;
-  if(!ctx.mapel){
-    document.getElementById('ai-context-display').innerHTML='Belum ada data. Isi Wizard Generator terlebih dahulu.';
-    return;
+/* ========== AI/LOGIC GENERATOR ========== */
+function generateTPAwayFromCP() {
+  if (STATE.data.tps && STATE.data.tps.length > 0) return STATE.data.tps; // Use existing if already generated
+
+  let tps = [];
+  const verbs = ['Mengidentifikasi', 'Menganalisis', 'Menjelaskan', 'Mengevaluasi', 'Menerapkan', 'Merancang'];
+  let validCPs = STATE.master.cpList.filter(cp => cp.trim() !== '');
+  
+  if (validCPs.length === 0) validCPs = ['Mempelajari konsep dasar sesuai pedoman mata pelajaran.'];
+
+  let jpTotal = STATE.master.totalJP || 36;
+  let jpPerTP = Math.max(2, Math.floor(jpTotal / (validCPs.length * 2)));
+
+  validCPs.forEach((cp, idx) => {
+    const words = cp.split(' ').slice(0, 8).join(' ');
+    tps.push({
+      kode: `TP-${idx+1}.1`,
+      deskripsi: `${verbs[idx % verbs.length]} ${words.toLowerCase()}...`,
+      cpAsal: `CP ${idx+1}`,
+      jp: jpPerTP
+    });
+    tps.push({
+      kode: `TP-${idx+1}.2`,
+      deskripsi: `${verbs[(idx+1) % verbs.length]} lanjutan dari konsep tersebut dalam konteks kehidupan nyata.`,
+      cpAsal: `CP ${idx+1}`,
+      jp: jpPerTP
+    });
+  });
+  
+  let computedTotal = tps.reduce((acc, curr) => acc + curr.jp, 0);
+  if (computedTotal < jpTotal && tps.length > 0) {
+      tps[tps.length - 1].jp += (jpTotal - computedTotal);
   }
-  document.getElementById('ai-context-display').innerHTML=`
-    <strong>Jenjang:</strong> ${ctx.jenjang}<br>
-    <strong>Fase:</strong> ${ctx.fase}<br>
-    <strong>Kelas:</strong> ${ctx.kelas}<br>
-    <strong>Mapel:</strong> ${ctx.mapel}<br>
-    <strong>Semester:</strong> ${ctx.semester}<br>
-    <strong>Tahun:</strong> ${ctx.tahun}
+  
+  STATE.data.tps = tps;
+  saveState();
+  return tps;
+}
+
+/* ========== PAGE: DASHBOARD ========== */
+function renderDashboard(){
+  const m = STATE.master;
+  const isSetup = STATE.progressLevel > 1;
+
+  return `
+    <div class="breadcrumb"><span>Beranda</span><span class="sep">›</span><span>Dashboard</span></div>
+    <div class="page-header">
+      <div class="page-title">Selamat Datang di EduPlan AI</div>
+      <div class="page-sub">Aplikasi perencanaan pembelajaran berbasis alur terstruktur (Step-by-Step).</div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card" style="--stat-color:var(--primary)">
+        <div class="stat-label">Status Alur</div>
+        <div class="stat-value">${STATE.progressLevel} / 10</div>
+        <div class="stat-sub">Tahap Diselesaikan</div>
+        <div class="stat-icon">📈</div>
+      </div>
+      <div class="stat-card" style="--stat-color:var(--accent2)">
+        <div class="stat-label">Capaian Pembelajaran</div>
+        <div class="stat-value">${m.cpList.filter(c=>c.trim()!=='').length}</div>
+        <div class="stat-sub">CP Diinputkan</div>
+        <div class="stat-icon">📖</div>
+      </div>
+      <div class="stat-card" style="--stat-color:var(--warn)">
+        <div class="stat-label">Total JP Efektif</div>
+        <div class="stat-value">${m.totalJP || 0}</div>
+        <div class="stat-sub">Jam Pelajaran</div>
+        <div class="stat-icon">⏱️</div>
+      </div>
+    </div>
+
+    ${!isSetup ? `
+    <div class="card" style="background:var(--primary-light);border:2px solid var(--primary);text-align:center;padding:40px 20px">
+      <div style="font-size:3rem;margin-bottom:10px">🚀</div>
+      <h2 style="color:var(--primary-dark);font-size:1.5rem;font-weight:800;margin-bottom:10px">Mulai Rencanakan Pembelajaranmu!</h2>
+      <p style="color:var(--text2);margin-bottom:20px;max-width:600px;margin-left:auto;margin-right:auto">EduPlan AI akan memandu Anda membuat perangkat ajar lengkap mulai dari Data Master hingga Rubrik Penilaian secara berurutan agar data terhubung sempurna.</p>
+      <button class="btn btn-primary btn-lg" onclick="navigate('data_master')">Mulai dari Tahap 1: Data Master ➡️</button>
+    </div>
+    ` : `
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title"><span class="ico">🏫</span>Ringkasan Profil Pembelajaran</div>
+        <table style="font-size:0.8rem">
+          <tr><td style="width:35%;font-weight:600">Penyusun</td><td>${m.penyusun}</td></tr>
+          <tr><td style="font-weight:600">Sekolah</td><td>${m.sekolah}</td></tr>
+          <tr><td style="font-weight:600">Mata Pelajaran</td><td>${m.mapel} — Kelas ${m.kelas} (${m.fase})</td></tr>
+          <tr><td style="font-weight:600">Model Pembelajaran</td><td>${m.strategi}</td></tr>
+        </table>
+        <div style="margin-top:14px">
+          <button class="btn btn-outline btn-sm" onclick="navigate('data_master')">✏️ Edit Data Master</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="ico">⚡</span>Lanjutkan Pengerjaan</div>
+        <p style="font-size:0.85rem;color:var(--text2);margin-bottom:16px">Anda saat ini berada di Tahap ${STATE.progressLevel}: <strong>${STEP_NAMES[STATE.progressLevel]}</strong>.</p>
+        <button class="btn btn-primary" style="width:100%" onclick="navigate('${Object.keys(STEP_MAP).find(k=>STEP_MAP[k]===STATE.progressLevel)}')">
+          Lanjutkan ke Tahap ${STATE.progressLevel} ➡️
+        </button>
+      </div>
+    </div>
+    `}
   `;
 }
 
-async function aiGenerate(type){
-  const out = document.getElementById('ai-output');
-  const ctx = STATE.context;
-  if(!ctx.mapel){toast('Isi Wizard Generator terlebih dahulu','warn');return;}
-  out.className='ai-output visible';
-  out.innerHTML='<span class="ai-typing">AI sedang membuat dokumen</span>';
-  await sleep(1500);
-  const generators = {
-    atp: ()=>`<strong>ATP ${ctx.mapel} Kelas ${ctx.kelas}</strong><br><br>
-      TP-01: Peserta didik mampu mengidentifikasi konsep dasar ${ctx.mapel} dengan tepat (2 JP)<br>
-      TP-02: Peserta didik mampu menjelaskan prinsip-prinsip ${ctx.mapel} secara sistematis (3 JP)<br>
-      TP-03: Peserta didik mampu menganalisis fenomena menggunakan konsep ${ctx.mapel} (4 JP)<br>
-      TP-04: Peserta didik mampu menerapkan konsep dalam situasi nyata (4 JP)<br>
-      TP-05: Peserta didik mampu mengevaluasi dan mencipta solusi berbasis ${ctx.mapel} (5 JP)<br>
-      <em>Total: 18 JP | Semester ${ctx.semester}</em>`,
-    rpm: ()=>`<strong>RPM ${ctx.mapel} — TP-01</strong><br><br>
-      <strong>Tujuan:</strong> Peserta didik mengidentifikasi konsep dasar ${ctx.mapel}<br>
-      <strong>Profil Pelajar Pancasila:</strong> Bernalar Kritis, Kreatif<br>
-      <strong>Pendekatan:</strong> Deep Learning — Mindful, Meaningful, Joyful<br>
-      <strong>Kegiatan Awal (10'):</strong> Apersepsi, pertanyaan pemantik<br>
-      <strong>Kegiatan Inti (60'):</strong> Eksplorasi → Elaborasi → Konfirmasi<br>
-      <strong>Kegiatan Penutup (10'):</strong> Refleksi, kesimpulan, asesmen formatif`,
-    lkpd: ()=>`<strong>LKPD ${ctx.mapel} — TP-01</strong><br><br>
-      <strong>Identitas:</strong> Kelas ${ctx.kelas} | ${ctx.mapel} | Sem. ${ctx.semester}<br>
-      <strong>Tujuan:</strong> Memahami konsep dasar ${ctx.mapel}<br>
-      <strong>Petunjuk:</strong> Bacalah dengan seksama, diskusikan bersama kelompok<br>
-      <strong>Aktivitas 1:</strong> Pengamatan dan identifikasi<br>
-      <strong>Aktivitas 2:</strong> Analisis dan diskusi kelompok<br>
-      <strong>Refleksi:</strong> Apa yang kamu pelajari hari ini?<br>
-      <strong>Penilaian:</strong> Skor max 100 | Ketuntasan ≥ 75`,
-    soal: ()=>`<strong>Bank Soal ${ctx.mapel} — HOTS</strong><br><br>
-      1. (C4) Analisislah hubungan antara...<br>
-      2. (C5) Evaluasilah efektivitas dari...<br>
-      3. (C6) Rancanglah sebuah solusi untuk...<br>
-      4. (AKM) Bacalah stimulus berikut, kemudian...<br>
-      5. (HOTS-PG) Jika kondisi X berubah menjadi Y, maka...<br>
-      <em>✓ Kisi-kisi dan rubrik tersedia</em>`,
-    rubrik: ()=>`<strong>Rubrik Penilaian ${ctx.mapel}</strong><br><br>
-      <strong>Dimensi 1 — Pemahaman Konsep</strong><br>
-      4: Sangat paham, lengkap dan akurat<br>
-      3: Paham dengan sedikit kekurangan<br>
-      2: Cukup paham, beberapa kesalahan<br>
-      1: Kurang paham, banyak kesalahan<br><br>
-      <strong>KKTP:</strong> Nilai ≥ 75 = Tuntas | < 75 = Belum Tuntas`
-  };
-  out.innerHTML = (generators[type]||generators.atp)();
-  toast(`Dokumen ${type.toUpperCase()} berhasil di-generate!`,'success');
-}
+/* ========== PAGE 1: DATA MASTER ========== */
+function renderDataMaster(){
+  const m = STATE.master;
+  
+  const p3List = ['Beriman & Bertaqwa', 'Berkebinekaan Global', 'Bergotong Royong', 'Mandiri', 'Bernalar Kritis', 'Kreatif'];
+  const p3Html = p3List.map(p => `
+    <label class="checkbox-item">
+      <input type="checkbox" name="profil" value="${p}" ${m.profilPancasila.includes(p)?'checked':''}>
+      ${p}
+    </label>
+  `).join('');
 
-function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
-
-/* ========== WIZARD ========== */
-function applyWizard(){
-  const fields = ['jenjang','fase','kelas','mapel','semester','tahun'];
-  fields.forEach(f=>{
-    const el = document.getElementById(`w-${f}`);
-    if(el) STATE.context[f] = el.value;
-  });
-  if(!STATE.context.mapel){toast('Lengkapi semua data terlebih dahulu','warn');return;}
-  updateAiContext();
-  toast('Data berhasil disimpan! AI siap generate dokumen 🎉','success');
-  saveState();
-  setTimeout(()=>navigate(STATE.currentPage),500);
-}
-
-function wizardHTML(){
-  const ctx = STATE.context;
-  const jenjangList=['SD','SMP','SMA','SMK'];
-  const faseList=['Fase A','Fase B','Fase C','Fase D','Fase E','Fase F'];
-  const kelasList=['1','2','3','4','5','6','7','8','9','10','11','12'];
-  const mapelList=['Bahasa Indonesia','Matematika','IPA','IPS','IPAS','Fisika','Kimia','Biologi','Sejarah','Bahasa Inggris','PPKn','Seni Budaya','PJOK','Informatika','Prakarya'];
-  const semList=['1','2'];
-  const tahunList=['2024/2025','2025/2026','2026/2027'];
-
-  const sel = (id,arr,cur,lbl)=>`<div>
-    <div class="wizard-label">${lbl}</div>
-    <select class="wizard-select" id="w-${id}">
-      <option value="">-- Pilih --</option>
-      ${arr.map(a=>`<option value="${a}" ${cur===a?'selected':''}>${a}</option>`).join('')}
-    </select>
-  </div>`;
-  return `<div class="wizard-wrap no-print">
-    <div class="wizard-title">🚀 Wizard Generator AI</div>
-    <div class="wizard-sub">Isi data di bawah untuk generate seluruh perangkat ajar secara otomatis</div>
-    <div class="wizard-grid">
-      ${sel('jenjang',jenjangList,ctx.jenjang,'Jenjang')}
-      ${sel('fase',faseList,ctx.fase,'Fase')}
-      ${sel('kelas',kelasList,ctx.kelas,'Kelas')}
-      ${sel('mapel',mapelList,ctx.mapel,'Mata Pelajaran')}
-      ${sel('semester',semList,ctx.semester,'Semester')}
-      ${sel('tahun',tahunList,ctx.tahun,'Tahun Pelajaran')}
-    </div>
-    <button class="wizard-btn" onclick="applyWizard()">⚡ Generate Perangkat Ajar</button>
-  </div>`;
-}
-
-/* ========== PAGES ========== */
-
-function renderDashboard(){
-  const ctx = STATE.context;
-  const hasCtx = !!ctx.mapel;
   return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><span>Beranda</span><span class="sep">›</span><span>Dashboard</span></div>
+    ${renderProgressBar(1)}
     <div class="page-header">
-      <div class="page-title">Dashboard Pembelajaran</div>
-      <div class="page-sub">Selamat datang di EduPlan AI — Platform Perencanaan Pembelajaran Terintegrasi</div>
+      <div class="page-title">Tahap 1: Konfigurasi Data Utama (Master)</div>
+      <div class="page-sub">Tahap awal wajib. Semua dokumen akan berpatokan pada data yang Anda masukkan di sini.</div>
     </div>
 
-    <div class="stats-grid">
-      <div class="stat-card" style="--stat-color:#1a56db" onclick="navigate('atp')">
-        <div class="stat-label">Dokumen ATP</div>
-        <div class="stat-value">${hasCtx?'12':'—'}</div>
-        <div class="stat-sub">Alur Tujuan Pembelajaran</div>
-        <div class="stat-icon">🗺️</div>
-      </div>
-      <div class="stat-card" style="--stat-color:#10b981" onclick="navigate('rpm')">
-        <div class="stat-label">RPM / Modul Ajar</div>
-        <div class="stat-value">${hasCtx?'8':'—'}</div>
-        <div class="stat-sub">Pertemuan terjadwal</div>
-        <div class="stat-icon">📝</div>
-      </div>
-      <div class="stat-card" style="--stat-color:#f59e0b" onclick="navigate('banksoal')">
-        <div class="stat-label">Bank Soal</div>
-        <div class="stat-value">${hasCtx?'45':'—'}</div>
-        <div class="stat-sub">Soal HOTS + LOTS + AKM</div>
-        <div class="stat-icon">🏦</div>
-      </div>
-      <div class="stat-card" style="--stat-color:#ef4444" onclick="navigate('lkpd')">
-        <div class="stat-label">LKPD</div>
-        <div class="stat-value">${hasCtx?'6':'—'}</div>
-        <div class="stat-sub">Lembar Kerja Peserta Didik</div>
-        <div class="stat-icon">📋</div>
-      </div>
-      <div class="stat-card" style="--stat-color:#8b5cf6" onclick="navigate('rekapnilai')">
-        <div class="stat-label">Peserta Didik</div>
-        <div class="stat-value">${hasCtx?'32':'—'}</div>
-        <div class="stat-sub">Data nilai tersedia</div>
-        <div class="stat-icon">👥</div>
-      </div>
-      <div class="stat-card" style="--stat-color:#0ea5e9" onclick="navigate('analisis')">
-        <div class="stat-label">Ketuntasan</div>
-        <div class="stat-value">${hasCtx?'87%':'—'}</div>
-        <div class="stat-sub">Di atas KKTP</div>
-        <div class="stat-icon">🏆</div>
-      </div>
-    </div>
-
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title"><span class="ico">📊</span>Status Dokumen</div>
-        <div class="chart-bar-wrap">
-          ${[['ATP',100],['Prota',100],['Promes',80],['RPM',65],['LKPD',50],['Bank Soal',75],['Rubrik',60]].map(([l,v])=>`
-          <div class="chart-bar-item">
-            <div class="chart-bar-label">${l}</div>
-            <div class="chart-bar-track"><div class="chart-bar-fill" style="width:${v}%"></div></div>
-            <div class="chart-bar-val">${v}%</div>
-          </div>`).join('')}
+    <div class="setup-wrap" id="master-form-container">
+      <div class="setup-section">
+        <div class="setup-section-title"><span>1</span> Identitas Sekolah & Guru</div>
+        <div class="form-row3">
+          <div class="form-group"><label class="form-label">Nama Penyusun</label>
+            <input type="text" class="form-input" id="fm-penyusun" value="${m.penyusun}"></div>
+          <div class="form-group"><label class="form-label">Asal Sekolah</label>
+            <input type="text" class="form-input" id="fm-sekolah" value="${m.sekolah}"></div>
+          <div class="form-group"><label class="form-label">Nama Kepala Sekolah</label>
+            <input type="text" class="form-input" id="fm-kepsek" value="${m.kepsek}"></div>
+          <div class="form-group"><label class="form-label">Tahun Pelajaran</label>
+            <input type="text" class="form-input" id="fm-tahun" value="${m.tahun}"></div>
+          <div class="form-group"><label class="form-label">Semester</label>
+            <select class="form-select" id="fm-semester">
+              <option value="1 (Ganjil)" ${m.semester.includes('1')?'selected':''}>1 (Ganjil)</option>
+              <option value="2 (Genap)" ${m.semester.includes('2')?'selected':''}>2 (Genap)</option>
+            </select></div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-title"><span class="ico">📅</span>Kalender Akademik</div>
-        ${renderMiniCalendar()}
-      </div>
-    </div>
 
-    <div class="grid2" style="margin-top:16px">
-      <div class="card">
-        <div class="card-title"><span class="ico">🎯</span>Progress Tujuan Pembelajaran</div>
-        ${hasCtx ? `
-        ${[['TP-01: Identifikasi Konsep',90],['TP-02: Penjelasan Prinsip',75],['TP-03: Analisis Fenomena',60],['TP-04: Penerapan Nyata',45],['TP-05: Evaluasi & Kreasi',30]].map(([l,v])=>`
-          <div style="margin-bottom:10px">
-            <div style="display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:3px">
-              <span>${l}</span><span style="font-weight:700;color:var(--primary)">${v}%</span>
+      <div class="setup-section">
+        <div class="setup-section-title"><span>2</span> Parameter Pembelajaran</div>
+        <div class="form-row3">
+          <div class="form-group"><label class="form-label">Mata Pelajaran</label>
+            <input type="text" class="form-input" id="fm-mapel" value="${m.mapel}"></div>
+          <div class="form-group"><label class="form-label">Kelas</label>
+            <input type="text" class="form-input" id="fm-kelas" value="${m.kelas}"></div>
+          <div class="form-group"><label class="form-label">Fase</label>
+            <select class="form-select" id="fm-fase">
+              ${['Fase A','Fase B','Fase C','Fase D','Fase E','Fase F'].map(f=>`<option value="${f}" ${m.fase===f?'selected':''}>${f}</option>`).join('')}
+            </select></div>
+          <div class="form-group"><label class="form-label">Topik / Elemen</label>
+            <input type="text" class="form-input" id="fm-topik" value="${m.topik}"></div>
+          <div class="form-group"><label class="form-label">Waktu Pertemuan</label>
+            <input type="text" class="form-input" id="fm-waktu" value="${m.waktu}" placeholder="Cth: 2 x 40 Menit"></div>
+        </div>
+      </div>
+
+      <div class="setup-section">
+        <div class="setup-section-title"><span>3</span> Capaian Pembelajaran (CP) dalam 1 Tahun</div>
+        <p style="font-size:0.8rem;color:var(--text2);margin-bottom:12px">Masukkan minimal 1 Capaian Pembelajaran (Maksimal 10).</p>
+        <div id="cp-inputs-container">
+          ${m.cpList.map((cp, idx) => `
+            <div class="cp-row">
+              <div class="cp-num">${idx+1}</div>
+              <textarea class="form-textarea fm-cp-item" rows="2">${cp}</textarea>
+              <button class="btn btn-danger btn-sm" onclick="this.parentElement.remove(); updateCPNumbers()" style="height:fit-content;padding:8px">✕</button>
             </div>
-            <div class="progress"><div class="progress-bar" style="width:${v}%"></div></div>
-          </div>`).join('')}
-        ` : `<div class="empty-state"><div class="es-icon">🎯</div><div class="es-title">Belum ada data</div><div class="es-sub">Isi Wizard Generator untuk memulai</div></div>`}
+          `).join('')}
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="addCPField()" style="margin-top:8px">+ Tambah CP</button>
       </div>
-      <div class="card">
-        <div class="card-title"><span class="ico">🔔</span>Notifikasi & Pengingat</div>
-        ${[
-          {ico:'📝',msg:'RPM Pertemuan 5 belum selesai',time:'2j lalu',type:'warn'},
-          {ico:'✅',msg:'ATP berhasil di-generate',time:'1h lalu',type:'success'},
-          {ico:'📊',msg:'Rekap nilai semester tersedia',time:'Kemarin',type:'info'},
-          {ico:'⚠️',msg:'3 peserta didik perlu remedial',time:'2h lalu',type:'warn'},
-        ].map(n=>`
-          <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
-            <span style="font-size:1.2rem">${n.ico}</span>
-            <div style="flex:1"><div style="font-size:0.82rem;font-weight:600">${n.msg}</div>
-            <div style="font-size:0.72rem;color:var(--text3)">${n.time}</div></div>
-          </div>`).join('')}
+
+      <div class="setup-section">
+        <div class="setup-section-title"><span>4</span> Konteks Siswa & Strategi</div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Dimensi Profil Pelajar Pancasila</label>
+            <div class="checkbox-grid" id="fm-profil">${p3Html}</div>
+          </div>
+          <div class="form-group"><label class="form-label">Strategi / Model Pembelajaran</label>
+            <input type="text" class="form-input" id="fm-strategi" value="${m.strategi}"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Sarana dan Prasarana</label>
+            <textarea class="form-textarea" id="fm-sarpras" rows="2">${m.sarpras}</textarea></div>
+          <div class="form-group"><label class="form-label">Pertanyaan Pemantik Global</label>
+            <textarea class="form-textarea" id="fm-pemantik" rows="2">${m.pemantik}</textarea></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;justify-content:flex-end">
+        <button class="btn btn-outline btn-lg" onclick="fillExampleData()">💡 Isi Contoh Data</button>
+        <button class="btn btn-primary btn-lg" onclick="saveMasterData()">💾 Simpan & Lanjut ke Tahap 2 ➡️</button>
       </div>
     </div>
-    
-    <div class="card" style="margin-top:16px">
-      <div class="card-title"><span class="ico">⚡</span>Akses Cepat</div>
-      <div class="btn-group">
-        <button class="btn btn-primary" onclick="navigate('atp')">🗺️ Buat ATP</button>
-        <button class="btn btn-outline" onclick="navigate('rpm')">📝 Buat RPM</button>
-        <button class="btn btn-outline" onclick="navigate('lkpd')">📋 Buat LKPD</button>
-        <button class="btn btn-outline" onclick="navigate('banksoal')">🏦 Buat Soal</button>
-        <button class="btn btn-ghost" onclick="navigate('laporan')">📤 Ekspor</button>
-      </div>
-    </div>`;
+  `;
 }
 
-function renderMiniCalendar(){
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth();
-  const days = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
-  const monthName = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-  const firstDay = new Date(year,month,1).getDay();
-  const daysInMonth = new Date(year,month+1,0).getDate();
-  const events = [5,10,15,20,25];
-  let html = `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-    <span style="font-size:0.82rem;font-weight:700">${monthName[month]} ${year}</span>
-    <span class="badge badge-blue">${monthName[month]}</span>
-  </div>
-  <div class="cal-grid">
-    ${days.map(d=>`<div class="cal-day-name">${d}</div>`).join('')}
-    ${Array.from({length:firstDay},()=>'<div></div>').join('')}
-    ${Array.from({length:daysInMonth},(_,i)=>{
-      const d=i+1;
-      const isToday=d===now.getDate();
-      const hasEv=events.includes(d);
-      return `<div class="cal-day${isToday?' today':''}${hasEv&&!isToday?' has-event':''}">${d}</div>`;
-    }).join('')}
-  </div>`;
-  return html;
-}
+window.fillExampleData = function() {
+  STATE.master = {
+    penyusun: 'Siti Aminah, S.Pd', kepsek: 'Drs. Budi Raharjo, M.Pd', sekolah: 'SMP Negeri 1 Nusantara',
+    tahun: '2025/2026', semester: '1 (Ganjil)', mapel: 'Ilmu Pengetahuan Alam (IPA)', kelas: 'VIII', fase: 'Fase D',
+    waktu: '2 x 40 Menit', topik: 'Sistem Pencernaan Manusia', targetSiswa: 'Reguler / Tipikal',
+    profilPancasila: ['Bernalar Kritis', 'Bergotong Royong', 'Mandiri'],
+    minatBelajar: 'Praktik dan Visual', lingkunganBelajar: 'Lab IPA',
+    strategi: 'Problem Based Learning (PBL)', platform: 'Quizizz',
+    sarpras: 'Alat peraga torso pencernaan, proyektor, laptop, LKPD cetak.',
+    pemantik: 'Pernahkah kamu merasa sakit perut setelah makan pedas? Organ apa yang terdampak?',
+    cpList: [
+      'Peserta didik mampu mendeskripsikan anatomi dan fisiologi sistem pencernaan manusia.',
+      'Peserta didik mampu menganalisis hubungan antara struktur organ pencernaan dengan fungsinya.',
+      'Peserta didik mampu mengevaluasi pola makan sehari-hari dikaitkan dengan kesehatan pencernaan.'
+    ],
+    pekanEfektif: 0, totalJP: 0
+  };
+  STATE.data.tps = []; // Reset TP agar diregenerate sesuai contoh
+  saveState();
+  navigate('data_master');
+  toast('Contoh data dimuat!', 'success');
+};
 
+window.addCPField = function() {
+  const container = document.getElementById('cp-inputs-container');
+  const count = container.children.length;
+  if(count >= 10) return toast('Maksimal 10 CP', 'warn');
+  
+  const div = document.createElement('div');
+  div.className = 'cp-row';
+  div.innerHTML = `<div class="cp-num">${count+1}</div><textarea class="form-textarea fm-cp-item" rows="2"></textarea><button class="btn btn-danger btn-sm" onclick="this.parentElement.remove(); updateCPNumbers()" style="height:fit-content;padding:8px">✕</button>`;
+  container.appendChild(div);
+};
+
+window.updateCPNumbers = function() {
+  document.querySelectorAll('.cp-row .cp-num').forEach((el, i) => el.textContent = i + 1);
+};
+
+window.saveMasterData = function() {
+  const m = STATE.master;
+  m.penyusun = document.getElementById('fm-penyusun').value;
+  m.sekolah = document.getElementById('fm-sekolah').value;
+  m.kepsek = document.getElementById('fm-kepsek').value;
+  m.tahun = document.getElementById('fm-tahun').value;
+  m.semester = document.getElementById('fm-semester').value;
+  m.mapel = document.getElementById('fm-mapel').value;
+  m.kelas = document.getElementById('fm-kelas').value;
+  m.fase = document.getElementById('fm-fase').value;
+  m.topik = document.getElementById('fm-topik').value;
+  m.waktu = document.getElementById('fm-waktu').value;
+  m.strategi = document.getElementById('fm-strategi').value;
+  m.sarpras = document.getElementById('fm-sarpras').value;
+  m.pemantik = document.getElementById('fm-pemantik').value;
+  
+  const cbs = document.querySelectorAll('input[name="profil"]:checked');
+  m.profilPancasila = Array.from(cbs).map(cb => cb.value);
+  
+  const cpNodes = document.querySelectorAll('.fm-cp-item');
+  m.cpList = Array.from(cpNodes).map(n => n.value.trim()).filter(v => v !== '');
+  if(m.cpList.length === 0) m.cpList = [''];
+
+  if(!m.mapel || !m.penyusun) return toast('Penyusun dan Mapel wajib diisi!', 'warn');
+
+  // Reset TPs if CP changed to force regeneration
+  STATE.data.tps = []; 
+  
+  completeStep(1, 'ape');
+};
+
+/* ========== PAGE 2: ANALISIS PEKAN EFEKTIF (APE) ========== */
 function renderAPE(){
-  const ctx = STATE.context;
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Analisis Pekan Efektif</span></div>
-    <div class="page-header">
-      <div class="page-title">Analisis Pekan Efektif</div>
-      <div class="page-sub">Hitung jumlah pekan efektif untuk perencanaan pembelajaran semester</div>
-    </div>
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title"><span class="ico">📅</span>Input Data Kalender</div>
-        <div class="form-group"><label class="form-label">Semester</label>
-          <select class="form-select" id="ape-sem"><option>1 (Juli - Desember)</option><option>2 (Januari - Juni)</option></select></div>
-        <div class="form-group"><label class="form-label">Tahun Pelajaran</label>
-          <input class="form-input" value="${ctx.tahun||'2025/2026'}" id="ape-tahun"></div>
-        <div class="form-group"><label class="form-label">Jumlah Minggu per Bulan</label>
-          <div class="form-row">
-            ${['Jul','Agt','Sep','Okt','Nov','Des'].map((b,i)=>`<div>
-              <label class="form-label" style="font-size:0.7rem">${b}</label>
-              <input class="form-input" type="number" value="${[4,4,4,5,4,4][i]}" id="ape-m${i}">
-            </div>`).join('')}
-          </div>
-        </div>
-        <div class="form-group"><label class="form-label">Hari Libur / Kegiatan Sekolah (pekan)</label>
-          <input class="form-input" type="number" value="4" id="ape-libur" placeholder="Masukkan jumlah pekan libur"></div>
-        <button class="btn btn-primary" onclick="hitungAPE()">⚡ Hitung Otomatis</button>
-      </div>
-      <div class="card">
-        <div class="card-title"><span class="ico">📊</span>Hasil Analisis Pekan Efektif</div>
-        <div id="ape-result">
-          <div class="empty-state"><div class="es-icon">📅</div><div class="es-title">Klik Hitung Otomatis</div><div class="es-sub">Hasil akan tampil di sini</div></div>
-        </div>
-      </div>
-    </div>`;
-}
+  const m = STATE.master;
+  let jpDefault = parseInt(m.waktu.match(/\d+/)) || 5; 
+  const isGanjil = m.semester.includes('1');
+  const bulan = isGanjil ? ['Juli','Agustus','September','Oktober','November','Desember'] : ['Januari','Februari','Maret','April','Mei','Juni'];
+  const defPekan = isGanjil ? [5,4,4,5,4,4] : [4,4,5,4,4,5];
+  const defTdk = isGanjil ? [3,0,0,1,0,4] : [0,0,1,1,0,3];
+  const defKeg = isGanjil ? ['Libur Smt Genap, MPLS','','','STS','','SAS, Natal'] : ['','','PTS','Libur Puasa','','PAT'];
 
-function hitungAPE(){
-  const vals = Array.from({length:6},(_,i)=>parseInt(document.getElementById(`ape-m${i}`).value)||4);
-  const libur = parseInt(document.getElementById('ape-libur').value)||4;
-  const total = vals.reduce((a,b)=>a+b,0);
-  const efektif = total - libur;
-  const mingPerTP = Math.floor(efektif/6);
-  const bulan = ['Juli','Agustus','September','Oktober','November','Desember'];
-  document.getElementById('ape-result').innerHTML = `
-    <div class="table-wrap" style="margin-bottom:14px">
-      <table><thead><tr><th>Bulan</th><th>Pekan</th><th>Status</th></tr></thead>
-      <tbody>${bulan.map((b,i)=>`<tr><td>${b}</td><td>${vals[i]} minggu</td><td><span class="badge badge-green">Efektif</span></td></tr>`).join('')}
-      <tr style="font-weight:700"><td>Total</td><td>${total} minggu</td><td></td></tr>
-      </tbody></table>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      ${[['Total Pekan',total,'badge-blue'],['Pekan Libur',libur,'badge-yellow'],['Pekan Efektif',efektif,'badge-green'],['Per TP (rata)',mingPerTP,'badge-purple']].map(([l,v,b])=>`
-      <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center">
-        <div style="font-size:0.72rem;color:var(--text2);margin-bottom:4px">${l}</div>
-        <div style="font-size:1.5rem;font-weight:800;color:var(--text)">${v}</div>
-      </div>`).join('')}
-    </div>
-    <div class="btn-group" style="margin-top:14px">
-      <button class="btn btn-outline btn-sm" onclick="toast('Diekspor ke PDF','success')">📄 Ekspor PDF</button>
-      <button class="btn btn-ghost btn-sm" onclick="toast('Tersimpan','success')">💾 Simpan</button>
-    </div>`;
-  toast('Analisis pekan efektif selesai','success');
-}
-
-function renderCP(){
-  const ctx = STATE.context;
-  const cpData = ctx.jenjang && ctx.fase && ctx.mapel ? 
-    (KB.cp[ctx.jenjang]?.[ctx.fase]?.[ctx.mapel] || 'CP belum tersedia untuk kombinasi ini.') : null;
   return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Analisis CP</span></div>
+    ${renderProgressBar(2)}
     <div class="page-header">
-      <div class="page-title">Analisis Capaian Pembelajaran</div>
-      <div class="page-sub">CP sesuai Kepmendikbud-Ristek dan pedoman BSKAP terbaru</div>
+      <div class="page-title">Tahap 2: Analisis Pekan Efektif (APE)</div>
+      <div class="page-sub">Menghitung JP efektif yang akan mendasari alokasi waktu ATP.</div>
     </div>
-    ${cpData ? `
-    <div class="card" style="margin-bottom:16px">
-      <div class="card-title"><span class="ico">📖</span>CP ${ctx.mapel} — ${ctx.fase} (${ctx.jenjang})</div>
-      <div class="doc-header-info">
-        <div><strong>Jenjang:</strong> ${ctx.jenjang}</div>
-        <div><strong>Fase:</strong> ${ctx.fase}</div>
-        <div><strong>Mata Pelajaran:</strong> ${ctx.mapel}</div>
-        <div><strong>Kelas:</strong> ${ctx.kelas}</div>
-      </div>
-      <div style="background:var(--bg);border-radius:8px;padding:16px;font-size:0.85rem;line-height:1.9;color:var(--text2);border-left:4px solid var(--primary)">
-        ${cpData}
-      </div>
-      <div class="btn-group" style="margin-top:14px">
-        <button class="btn btn-primary btn-sm" onclick="navigate('tp')">🎯 Buat TP dari CP ini</button>
-        <button class="btn btn-outline btn-sm" onclick="navigate('atp')">🗺️ Buat ATP</button>
-        <button class="btn btn-ghost btn-sm" onclick="toast('Disalin','success')">📋 Salin CP</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">🔍</span>Analisis Elemen CP</div>
-      <div class="accordion">
-        ${['Dimensi Pengetahuan','Dimensi Keterampilan','Dimensi Sikap','Profil Pelajar Pancasila'].map((el,i)=>`
-        <div class="accordion-item ${i===0?'open':''}">
-          <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
-            <span>${['📚','⚙️','💡','🇮🇩'][i]}</span> ${el}
-            <span class="accordion-arrow">▼</span>
-          </div>
-          <div class="accordion-body">
-            ${['Pengetahuan faktual, konseptual, prosedural, dan metakognitif yang relevan dengan mata pelajaran.',
-              'Keterampilan berpikir tingkat tinggi (HOTS), komunikasi, kolaborasi, dan kreativitas.',
-              'Sikap dan perilaku yang mencerminkan karakter positif dalam pembelajaran.',
-              'Beriman & Bertaqwa, Berkebinekaan Global, Mandiri, Bernalar Kritis, Kreatif, Gotong Royong.'][i]}
-          </div>
-        </div>`).join('')}
-      </div>
-    </div>
-    ` : `
-    <div class="card">
-      <div class="empty-state">
-        <div class="es-icon">📖</div>
-        <div class="es-title">Pilih Jenjang, Fase & Mata Pelajaran</div>
-        <div class="es-sub">Lengkapi Wizard Generator di atas untuk melihat CP yang sesuai</div>
-      </div>
-    </div>`}`;
-}
 
-function renderTP(){
-  const ctx = STATE.context;
-  const cpData = ctx.jenjang && ctx.fase && ctx.mapel ? 
-    (KB.cp[ctx.jenjang]?.[ctx.fase]?.[ctx.mapel]||'') : '';
-  const tps = cpData ? KB.generateTP(cpData, ctx.mapel, ctx.kelas) : [];
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Tujuan Pembelajaran</span></div>
-    <div class="page-header">
-      <div class="page-title">Tujuan Pembelajaran (TP)</div>
-      <div class="page-sub">Hasil transformasi CP menjadi TP yang terukur dan spesifik</div>
-    </div>
-    ${tps.length ? `
-    <div class="card" style="margin-bottom:16px">
-      <div class="card-title"><span class="ico">🎯</span>TP ${ctx.mapel} — ${ctx.fase} Kelas ${ctx.kelas}</div>
-      <div class="btn-group" style="margin-bottom:14px">
-        <button class="btn btn-primary btn-sm" onclick="navigate('atp')">🗺️ Buat ATP</button>
-        <button class="btn btn-outline btn-sm" onclick="toast('Disimpan','success')">💾 Simpan</button>
-        <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor','success')">📄 Ekspor</button>
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-title"><span class="ico">📅</span>Kalkulator Kalender & Jam Pelajaran</div>
+      
+      <div class="form-row3">
+        <div class="form-group"><label class="form-label">Tahun Pelajaran</label><input type="text" class="form-input" value="${m.tahun}" disabled style="background:var(--bg)"></div>
+        <div class="form-group"><label class="form-label">Semester</label><input type="text" class="form-input" value="${m.semester}" disabled style="background:var(--bg)"></div>
+        <div class="form-group"><label class="form-label">Jam Pelajaran (JP) per Minggu</label><input type="number" class="form-input" id="ape-jp" value="${jpDefault}"></div>
       </div>
-      <div class="table-wrap">
+      
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Alokasi Kokurikuler (JP)</label><input type="number" class="form-input" id="ape-koku" value="10"></div>
+        <div class="form-group"><label class="form-label">Jam Cadangan (JP)</label><input type="number" class="form-input" id="ape-cadangan" value="5"></div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:10px;">
         <table>
-          <thead><tr><th>Kode</th><th>Deskripsi Tujuan Pembelajaran</th><th>Dimensi P3</th><th>Level Bloom</th><th>Aksi</th></tr></thead>
+          <thead>
+            <tr><th style="width:120px">Bulan</th><th style="width:100px">Jml. Pekan</th><th style="width:120px">Tdk. Efektif</th><th>Keterangan</th></tr>
+          </thead>
           <tbody>
-            ${tps.map(tp=>`<tr>
-              <td><span class="badge badge-blue">${tp.kode}</span></td>
-              <td style="max-width:300px">${tp.deskripsi}</td>
-              <td><span class="badge badge-green">${tp.dimensi}</span></td>
-              <td><span class="badge badge-purple">${tp.bloom}</span></td>
-              <td><button class="btn btn-ghost btn-sm" onclick="editTP('${tp.kode}')">✏️</button></td>
-            </tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title"><span class="ico">📊</span>Distribusi Dimensi P3</div>
-        ${['Beriman','Berkebinekaan','Mandiri','Bernalar Kritis','Kreatif','Gotong Royong'].map((d,i)=>`
-          <div class="chart-bar-item" style="margin-bottom:8px">
-            <div class="chart-bar-label" style="font-size:0.7rem">${d}</div>
-            <div class="chart-bar-track"><div class="chart-bar-fill" style="width:${[100,83,67,50,33,17][i]}%"></div></div>
-            <div class="chart-bar-val">${[6,5,4,3,2,1][i]}</div>
-          </div>`).join('')}
-      </div>
-      <div class="card">
-        <div class="card-title"><span class="ico">🧠</span>Distribusi Taksonomi Bloom</div>
-        ${['C1 Mengingat','C2 Memahami','C3 Menerapkan','C4 Menganalisis','C5 Mengevaluasi','C6 Mencipta'].map((d,i)=>`
-          <div class="chart-bar-item" style="margin-bottom:8px">
-            <div class="chart-bar-label" style="font-size:0.7rem">${d}</div>
-            <div class="chart-bar-track"><div class="chart-bar-fill" style="width:${[40,60,80,70,50,30][i]}%"></div></div>
-            <div class="chart-bar-val">${[2,3,4,4,3,2][i]}</div>
-          </div>`).join('')}
-      </div>
-    </div>
-    ` : `
-    <div class="card">
-      <div class="empty-state">
-        <div class="es-icon">🎯</div>
-        <div class="es-title">Lengkapi Wizard Generator</div>
-        <div class="es-sub">Pilih jenjang, fase, kelas, dan mata pelajaran untuk generate TP otomatis</div>
-      </div>
-    </div>`}`;
-}
-
-function editTP(kode){
-  openModal(`Edit Tujuan Pembelajaran ${kode}`,`
-    <div class="form-group"><label class="form-label">Deskripsi TP</label>
-      <textarea class="form-textarea" rows="4">Deskripsi tujuan pembelajaran untuk ${kode}</textarea></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Dimensi P3</label>
-        <select class="form-select"><option>Bernalar Kritis</option><option>Kreatif</option><option>Mandiri</option><option>Gotong Royong</option><option>Beriman</option><option>Berkebinekaan</option></select></div>
-      <div class="form-group"><label class="form-label">Level Bloom</label>
-        <select class="form-select"><option>C1</option><option>C2</option><option>C3</option><option>C4</option><option>C5</option><option>C6</option></select></div>
-    </div>`,
-    `<button class="btn btn-primary" onclick="closeModal();toast('TP diperbarui','success')">💾 Simpan Perubahan</button>
-     <button class="btn btn-ghost" onclick="closeModal()">Batal</button>`);
-}
-
-function renderATP(){
-  const ctx = STATE.context;
-  const months = ['Juli','Agustus','September','Oktober','November','Desember','Januari','Februari','Maret','April','Mei','Juni'];
-  const tpList = ctx.mapel ? [
-    {kode:'TP-01',deskripsi:`Memahami konsep dasar ${ctx.mapel}`,jp:4,bulan:'Juli',pert:1},
-    {kode:'TP-02',deskripsi:`Menjelaskan prinsip-prinsip ${ctx.mapel}`,jp:6,bulan:'Agustus',pert:2},
-    {kode:'TP-03',deskripsi:`Menganalisis fenomena dengan ${ctx.mapel}`,jp:8,bulan:'September',pert:3},
-    {kode:'TP-04',deskripsi:`Menerapkan konsep dalam kehidupan nyata`,jp:8,bulan:'Oktober',pert:4},
-    {kode:'TP-05',deskripsi:`Mengevaluasi dan mencipta solusi`,jp:10,bulan:'November',pert:5},
-    {kode:'TP-06',deskripsi:`Refleksi dan demonstrasi karya`,jp:6,bulan:'Desember',pert:6},
-  ] : [];
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>ATP</span></div>
-    <div class="page-header">
-      <div class="page-title">Alur Tujuan Pembelajaran (ATP)</div>
-      <div class="page-sub">Urutan dan alur pencapaian TP yang logis dan sistematis</div>
-    </div>
-    ${tpList.length ? `
-    <div class="card" style="margin-bottom:16px">
-      <div class="card-title"><span class="ico">🗺️</span>ATP ${ctx.mapel} — ${ctx.fase} Kelas ${ctx.kelas} Semester ${ctx.semester}</div>
-      <div class="btn-group" style="margin-bottom:14px">
-        <button class="btn btn-primary btn-sm" onclick="navigate('prota')">📆 Buat Prota</button>
-        <button class="btn btn-outline btn-sm" onclick="navigate('rpm')">📝 Buat RPM</button>
-        <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor PDF','success')">📄 Ekspor PDF</button>
-        <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor DOCX','success')">📝 Ekspor DOCX</button>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>No</th><th>Kode TP</th><th>Deskripsi Tujuan Pembelajaran</th><th>Alokasi JP</th><th>Bulan</th><th>Pertemuan ke-</th></tr></thead>
-          <tbody>
-            ${tpList.map((tp,i)=>`<tr>
-              <td>${i+1}</td>
-              <td><span class="badge badge-blue">${tp.kode}</span></td>
-              <td>${tp.deskripsi}</td>
-              <td><span class="badge badge-green">${tp.jp} JP</span></td>
-              <td>${tp.bulan}</td>
-              <td>Ke-${tp.pert}</td>
-            </tr>`).join('')}
-            <tr style="font-weight:700">
-              <td colspan="3">Total</td>
-              <td><span class="badge badge-purple">${tpList.reduce((a,t)=>a+t.jp,0)} JP</span></td>
-              <td colspan="2"></td>
+            ${bulan.map((b,i)=>`
+              <tr>
+                <td style="font-weight:600">${b}</td>
+                <td><input type="number" class="form-input ape-p-tot" value="${defPekan[i]}" onchange="kalkulasiApeRealtime()"></td>
+                <td><input type="number" class="form-input ape-p-tdk" value="${defTdk[i]}" onchange="kalkulasiApeRealtime()"></td>
+                <td><input type="text" class="form-input ape-keg" value="${defKeg[i]}"></td>
+              </tr>
+            `).join('')}
+            <tr style="background:var(--bg2); font-weight:bold;">
+              <td>Jumlah</td><td id="lbl-tot-p">26</td><td id="lbl-tot-t">8</td><td></td>
             </tr>
           </tbody>
         </table>
       </div>
+
+      <button class="btn btn-primary" onclick="hitungAPE()" style="width:100%;justify-content:center;padding:12px;">⚡ Hitung Alokasi Waktu</button>
     </div>
-    <div class="card">
-      <div class="card-title"><span class="ico">🔗</span>Visualisasi Alur</div>
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 0">
-        ${tpList.map((tp,i)=>`
-          <div style="display:flex;align-items:center;gap:8px">
-            <div style="background:var(--primary-light);border:2px solid var(--primary);border-radius:10px;padding:10px 14px;text-align:center;min-width:100px;cursor:pointer" onclick="navigate('rpm')">
-              <div style="font-size:0.65rem;color:var(--text3);font-weight:700">${tp.kode}</div>
-              <div style="font-size:0.72rem;font-weight:600;color:var(--text);margin-top:2px">${tp.jp} JP</div>
-            </div>
-            ${i<tpList.length-1?'<span style="font-size:1.2rem;color:var(--primary)">→</span>':''}
-          </div>`).join('')}
+
+    <div class="card" id="ape-result-card" style="display:${m.totalJP?'block':'none'}">
+      <div class="card-title"><span>📊 Hasil: Total JP Tersedia = <strong id="res-jp" style="color:var(--primary)">${m.totalJP} JP</strong></span></div>
+      <p style="font-size:0.85rem;color:var(--text2);margin-bottom:16px">Jumlah JP ini akan otomatis didistribusikan ke Tujuan Pembelajaran di tahap berikutnya.</p>
+      
+      <div style="display:flex;gap:12px;justify-content:flex-end">
+        <button class="btn btn-primary btn-lg" onclick="simpanAPE()">💾 Simpan & Lanjut ke Tahap 3 ➡️</button>
       </div>
-    </div>` : `
-    <div class="card">
-      <div class="empty-state"><div class="es-icon">🗺️</div><div class="es-title">Lengkapi Wizard Generator</div><div class="es-sub">Data mata pelajaran diperlukan untuk generate ATP</div></div>
-    </div>`}`;
+    </div>
+  `;
 }
 
+window.kalkulasiApeRealtime = function() {
+  let tot = 0, tdk = 0;
+  document.querySelectorAll('.ape-p-tot').forEach(el => tot += parseInt(el.value)||0);
+  document.querySelectorAll('.ape-p-tdk').forEach(el => tdk += parseInt(el.value)||0);
+  document.getElementById('lbl-tot-p').innerText = tot;
+  document.getElementById('lbl-tot-t').innerText = tdk;
+}
+
+window.hitungAPE = function() {
+  const jpPerMinggu = parseInt(document.getElementById('ape-jp').value) || 5;
+  const jamCadangan = parseInt(document.getElementById('ape-cadangan').value) || 5;
+  const jamKoku = parseInt(document.getElementById('ape-koku').value) || 10;
+  
+  let totPekan = 0, totTdk = 0;
+  document.querySelectorAll('.ape-p-tot').forEach(el => totPekan += parseInt(el.value)||0);
+  document.querySelectorAll('.ape-p-tdk').forEach(el => totTdk += parseInt(el.value)||0);
+  
+  const pekanEfektif = totPekan - totTdk;
+  const totalJp = pekanEfektif * jpPerMinggu;
+  const totalJpEfektif = totalJp - jamCadangan - jamKoku;
+  
+  STATE.master.pekanEfektif = pekanEfektif;
+  STATE.master.totalJP = totalJpEfektif > 0 ? totalJpEfektif : 0;
+  
+  // Karena JP berubah, paksa TP terupdate nanti (reset data.tps)
+  STATE.data.tps = []; 
+  
+  document.getElementById('res-jp').innerText = STATE.master.totalJP + " JP";
+  document.getElementById('ape-result-card').style.display = 'block';
+  toast('Perhitungan selesai. Klik simpan untuk lanjut!', 'success');
+}
+
+window.simpanAPE = function() {
+  completeStep(2, 'cp');
+}
+
+/* ========== PAGE 3: ANALISIS CP & TP ========== */
+function renderAnalisisCP(){
+  const m = STATE.master;
+  // Ini akan men-generate TP baru jika STATE.data.tps kosong (karena reset di master/APE)
+  const tps = generateTPAwayFromCP();
+
+  return `
+    ${renderProgressBar(3)}
+    <div class="page-header">
+      <div class="page-title">Tahap 3: Analisis CP & TP</div>
+      <div class="page-sub">Sistem AI memecah CP menjadi Tujuan Pembelajaran dan mendistribusikan total ${m.totalJP} JP dari tahap APE.</div>
+    </div>
+    
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title"><span class="ico">📖</span>Daftar Capaian Pembelajaran (CP) Inputan Anda</div>
+      <ul style="font-size:0.85rem;color:var(--text2);margin-left:20px">
+        ${m.cpList.map(cp=>`<li>${cp}</li>`).join('')}
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="ico">🎯</span>Tujuan Pembelajaran (Hasil Breakdown AI)</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Kode TP</th><th>Deskripsi Tujuan Pembelajaran</th><th>Waktu (Otomatis dari APE)</th></tr></thead>
+          <tbody>
+            ${tps.map(tp=>`<tr>
+              <td><span class="badge badge-green">${tp.kode}</span></td>
+              <td>${tp.deskripsi}</td>
+              <td><strong>${tp.jp} JP</strong></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:20px">
+        <button class="btn btn-primary btn-lg" onclick="completeStep(3, 'atp')">💾 Simpan & Lanjut ke Tahap 4 ➡️</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ========== PAGE 4: ATP ========== */
+function renderATP(){
+  const m = STATE.master;
+  const tps = STATE.data.tps || [];
+  
+  return `
+    ${renderProgressBar(4)}
+    <div class="page-header"><div class="page-title">Tahap 4: Alur Tujuan Pembelajaran (ATP)</div></div>
+    
+    <div class="card">
+      <div class="card-title"><span class="ico">🗺️</span>Dokumen ATP — ${m.mapel}</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Urutan</th><th>Kode TP</th><th>Tujuan Pembelajaran</th><th>Dimensi P3</th><th>Waktu</th></tr></thead>
+          <tbody>
+            ${tps.map((tp,i)=>`<tr>
+              <td>${i+1}</td>
+              <td><span class="badge badge-blue">${tp.kode}</span></td>
+              <td>${tp.deskripsi}</td>
+              <td><span class="badge badge-green">${m.profilPancasila[i % m.profilPancasila.length] || 'Mandiri'}</span></td>
+              <td><strong>${tp.jp} JP</strong></td>
+            </tr>`).join('')}
+            <tr style="background:var(--primary-light)">
+              <td colspan="4" style="text-align:right;font-weight:bold;color:var(--primary)">Total Waktu Efektif:</td>
+              <td><strong style="color:var(--primary)">${m.totalJP} JP</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:20px">
+        <button class="btn btn-primary btn-lg" onclick="completeStep(4, 'prota')">💾 Simpan & Lanjut ke Tahap 5 ➡️</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ========== PAGE 5: PROTA ========== */
 function renderProta(){
-  const ctx = STATE.context;
+  const m = STATE.master;
+  const tps = STATE.data.tps || [];
+  const half = Math.ceil(tps.length / 2);
+  const sem1 = tps.slice(0, half);
+  const sem2 = tps.slice(half);
+
   return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Program Tahunan</span></div>
-    <div class="page-header">
-      <div class="page-title">Program Tahunan (Prota)</div>
-      <div class="page-sub">Rencana pembelajaran dalam satu tahun pelajaran penuh</div>
-    </div>
-    <div class="card" style="margin-bottom:16px">
-      <div class="btn-group" style="margin-bottom:14px">
-        <button class="btn btn-primary btn-sm" onclick="toast('Prota di-generate','success')">⚡ Generate Prota</button>
-        <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor','success')">📄 Ekspor PDF</button>
-        <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor','success')">📝 Ekspor DOCX</button>
-      </div>
-    </div>
-    ${ctx.mapel ? `
-    <div class="doc-preview">
-      <h1>PROGRAM TAHUNAN</h1>
-      <div class="doc-header-info">
-        <div><strong>Satuan Pendidikan:</strong> ${ctx.jenjang||'SMP'}</div>
-        <div><strong>Mata Pelajaran:</strong> ${ctx.mapel}</div>
-        <div><strong>Fase / Kelas:</strong> ${ctx.fase} / ${ctx.kelas}</div>
-        <div><strong>Tahun Pelajaran:</strong> ${ctx.tahun||'2025/2026'}</div>
-      </div>
-      <h2>SEMESTER 1</h2>
-      <table><thead><tr><th>No</th><th>Tujuan Pembelajaran</th><th>Alokasi Waktu</th><th>Bulan</th></tr></thead>
-      <tbody>
-        ${[1,2,3,4,5,6].map(i=>`<tr>
-          <td>${i}</td>
-          <td>TP-${String(i).padStart(2,'0')}: Deskripsi tujuan pembelajaran ke-${i} ${ctx.mapel}</td>
-          <td>${[4,6,8,8,10,6][i-1]} JP</td>
-          <td>${['Juli','Agustus','September','Oktober','November','Desember'][i-1]}</td>
-        </tr>`).join('')}
-        <tr><td colspan="2"><strong>Total Semester 1</strong></td><td><strong>42 JP</strong></td><td></td></tr>
-      </tbody></table>
-      <h2>SEMESTER 2</h2>
-      <table><thead><tr><th>No</th><th>Tujuan Pembelajaran</th><th>Alokasi Waktu</th><th>Bulan</th></tr></thead>
-      <tbody>
-        ${[7,8,9,10,11,12].map(i=>`<tr>
-          <td>${i-6}</td>
-          <td>TP-${String(i).padStart(2,'0')}: Deskripsi tujuan pembelajaran ke-${i} ${ctx.mapel}</td>
-          <td>${[6,8,8,6,6,4][i-7]} JP</td>
-          <td>${['Januari','Februari','Maret','April','Mei','Juni'][i-7]}</td>
-        </tr>`).join('')}
-        <tr><td colspan="2"><strong>Total Semester 2</strong></td><td><strong>38 JP</strong></td><td></td></tr>
-      </tbody></table>
-    </div>` : `<div class="card"><div class="empty-state"><div class="es-icon">📆</div><div class="es-title">Lengkapi Wizard Generator</div></div></div>`}`;
-}
-
-function renderPromes(){
-  const ctx = STATE.context;
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Program Semester</span></div>
-    <div class="page-header">
-      <div class="page-title">Program Semester (Promes)</div>
-      <div class="page-sub">Distribusi waktu pembelajaran tiap minggu dalam satu semester</div>
-    </div>
-    ${ctx.mapel ? `
-    <div class="card" style="margin-bottom:16px">
-      <div class="btn-group" style="margin-bottom:14px">
-        <button class="btn btn-primary btn-sm" onclick="toast('Promes di-generate','success')">⚡ Generate Promes</button>
-        <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor','success')">📄 Ekspor</button>
-      </div>
-    </div>
-    <div class="doc-preview">
-      <h1>PROGRAM SEMESTER</h1>
-      <div class="doc-header-info">
-        <div><strong>Satuan Pendidikan:</strong> ${ctx.jenjang}</div>
-        <div><strong>Mata Pelajaran:</strong> ${ctx.mapel}</div>
-        <div><strong>Kelas:</strong> ${ctx.kelas}</div>
-        <div><strong>Semester:</strong> ${ctx.semester}</div>
-        <div><strong>Tahun Pelajaran:</strong> ${ctx.tahun}</div>
-      </div>
-      <table>
-        <thead><tr><th>TP</th><th>Deskripsi</th><th>JP</th>${['1','2','3','4'].map(w=>`<th>M${w}</th>`).join('')}<th>Ket</th></tr></thead>
-        <tbody>
-          ${['TP-01','TP-02','TP-03','TP-04','TP-05','TP-06'].map((tp,i)=>`<tr>
-            <td>${tp}</td>
-            <td>Materi ${i+1} ${ctx.mapel}</td>
-            <td>${[4,6,8,8,10,6][i]}</td>
-            ${['1','2','3','4'].map(w=>`<td>${parseInt(w)===i+1?'✓':''}</td>`).join('')}
-            <td></td>
-          </tr>`).join('')}
-        </tbody>
-      </table>
-    </div>` : `<div class="card"><div class="empty-state"><div class="es-icon">🗓️</div><div class="es-title">Lengkapi Wizard Generator</div></div></div>`}`;
-}
-
-function renderRPM(){
-  const ctx = STATE.context;
-  const tabs = ['Identitas','Tujuan & Profil P3','Sarana & Prasarana','Kegiatan Pembelajaran','Asesmen','Refleksi & RTL'];
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>RPM / Modul Ajar</span></div>
-    <div class="page-header">
-      <div class="page-title">RPM / Modul Ajar</div>
-      <div class="page-sub">Rencana Pembelajaran Mendalam sesuai pedoman BSKAP terbaru</div>
-    </div>
-    ${ctx.mapel ? `
-    <div class="card" style="margin-bottom:16px">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-        <div>
-          <select class="form-select" style="width:auto;display:inline" id="rpm-tp">
-            ${[1,2,3,4,5,6].map(i=>`<option>TP-0${i}: Materi ${i} ${ctx.mapel}</option>`).join('')}
-          </select>
-        </div>
-        <div class="btn-group">
-          <button class="btn btn-primary btn-sm" onclick="generateRPM()">⚡ Generate RPM</button>
-          <button class="btn btn-outline btn-sm" onclick="navigate('lkpd')">📋 Buat LKPD</button>
-          <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor','success')">📄 Ekspor</button>
-        </div>
-      </div>
-    </div>
-    <div id="rpm-container">
-      <div class="tabs">
-        ${tabs.map((t,i)=>`<div class="tab ${i===0?'active':''}" onclick="switchTab(this,'rpm-tab-${i}')">${t}</div>`).join('')}
-      </div>
-      ${tabs.map((t,i)=>renderRPMTab(t,i,ctx)).join('')}
-    </div>
-    ` : `<div class="card"><div class="empty-state"><div class="es-icon">📝</div><div class="es-title">Lengkapi Wizard Generator</div><div class="es-sub">Data diperlukan untuk generate RPM</div></div></div>`}`;
-}
-
-function renderRPMTab(tab,idx,ctx){
-  const content = {
-    0: `<div class="doc-header-info">
-      ${[['Satuan Pendidikan',ctx.jenjang||'SMP'],['Mata Pelajaran',ctx.mapel],['Fase/Kelas',`${ctx.fase}/${ctx.kelas}`],['Semester',ctx.semester],['Tahun Pelajaran',ctx.tahun],['Alokasi Waktu','2 × 45 menit (1 Pertemuan)'],['Materi Pokok','Konsep Dasar '+ctx.mapel],['Pertemuan Ke-','1 dari 6']].map(([k,v])=>`<div><strong>${k}:</strong> ${v||'-'}</div>`).join('')}
-    </div>`,
-    1: `<h3>Tujuan Pembelajaran</h3>
-      <p>Melalui kegiatan pembelajaran berbasis proyek dan diskusi kelompok, peserta didik dapat mengidentifikasi dan menjelaskan konsep dasar ${ctx.mapel} dengan benar, serta mengaitkannya dengan kehidupan sehari-hari.</p>
-      <h3>Profil Pelajar Pancasila</h3>
-      <ul><li>Bernalar Kritis — Menganalisis informasi dengan bukti</li><li>Kreatif — Menghasilkan karya orisinal</li><li>Gotong Royong — Bekerja sama dalam tim</li></ul>`,
-    2: `<h3>Sarana dan Prasarana</h3>
-      <ul><li>Laptop/Tablet per kelompok</li><li>Proyektor/Screen</li><li>LKPD yang telah disiapkan</li><li>Bahan ajar digital dan buku teks</li></ul>
-      <h3>Peserta Didik</h3>
-      <p>Peserta didik reguler, tidak berkebutuhan khusus. Pembelajaran berjalan normal dengan variasi gaya belajar (visual, auditori, kinestetik).</p>
-      <h3>Model Pembelajaran</h3>
-      <p><strong>Project Based Learning (PjBL)</strong> berbasis pendekatan Deep Learning: Mindful, Meaningful, Joyful Learning</p>`,
-    3: `<h3>Kegiatan Pendahuluan (10 menit)</h3>
-      <ol><li>Guru memberi salam dan berdoa bersama (Beriman & Bertaqwa)</li><li>Mengecek kehadiran peserta didik</li><li>Menyampaikan apersepsi dan pertanyaan pemantik</li><li>Menyampaikan tujuan pembelajaran dan manfaatnya</li></ol>
-      <h3>Kegiatan Inti (60 menit)</h3>
-      <ol><li><strong>Eksplorasi:</strong> Peserta didik mengamati fenomena dan mengidentifikasi masalah</li><li><strong>Elaborasi:</strong> Diskusi kelompok, analisis data, pengerjaan LKPD</li><li><strong>Konfirmasi:</strong> Presentasi hasil, tanya jawab, klarifikasi guru</li></ol>
-      <h3>Kegiatan Penutup (10 menit)</h3>
-      <ol><li>Refleksi pembelajaran (Jurnal Belajar)</li><li>Kesimpulan bersama</li><li>Asesmen formatif singkat</li><li>Informasi pertemuan berikutnya</li></ol>`,
-    4: `<h3>Asesmen Diagnostik</h3>
-      <p>Dilakukan sebelum pembelajaran untuk mengetahui pengetahuan awal peserta didik.</p>
-      <h3>Asesmen Formatif</h3>
-      <ul><li>Observasi keaktifan selama diskusi</li><li>Penilaian LKPD</li><li>Kuis singkat akhir pertemuan</li></ul>
-      <h3>Asesmen Sumatif</h3>
-      <ul><li>Tes tertulis (PG + Uraian)</li><li>Portofolio karya peserta didik</li></ul>
-      <h3>KKTP</h3>
-      <p>Peserta didik dinyatakan tuntas jika skor ≥ 75 (75%) dari skor maksimal</p>`,
-    5: `<h3>Refleksi Guru</h3>
-      <ul><li>Apakah semua peserta didik memahami materi?</li><li>Apa yang perlu diperbaiki pada pertemuan berikutnya?</li><li>Bagaimana respons peserta didik terhadap model PjBL?</li></ul>
-      <h3>Rencana Tindak Lanjut</h3>
-      <ul><li>Remedial untuk peserta didik yang belum mencapai KKTP</li><li>Pengayaan untuk peserta didik yang sudah melampaui KKTP</li><li>Penyesuaian strategi pembelajaran pertemuan berikutnya</li></ul>`
-  };
-  return `<div class="tab-content ${idx===0?'active':''}" id="rpm-tab-${idx}">
-    <div class="doc-preview">${content[idx]||''}</div>
-  </div>`;
-}
-
-function generateRPM(){
-  toast('RPM berhasil di-generate!','success');
-}
-
-function switchTab(el, tabId){
-  const parent = el.closest('.card, #rpm-container, #lkpd-container');
-  const tabs = el.parentElement;
-  tabs.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  const container = el.closest('[id]').parentElement || document.getElementById('rpm-container') || document.getElementById('lkpd-container');
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  const target = document.getElementById(tabId);
-  if(target) target.classList.add('active');
-}
-
-function renderLKPD(){
-  const ctx = STATE.context;
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>LKPD</span></div>
-    <div class="page-header">
-      <div class="page-title">Lembar Kerja Peserta Didik (LKPD)</div>
-      <div class="page-sub">LKPD terhubung otomatis dengan RPM dan tujuan pembelajaran</div>
-    </div>
-    ${ctx.mapel ? `
-    <div class="card" style="margin-bottom:16px">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-        <div class="btn-group">
-          <button class="btn btn-primary" onclick="toast('LKPD di-generate','success')">⚡ Generate LKPD</button>
-          <button class="btn btn-outline btn-sm" onclick="toast('Dicetak','info')">🖨️ Cetak</button>
-          <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor PDF','success')">📄 PDF</button>
-        </div>
-      </div>
-    </div>
-    <div class="doc-preview">
-      <div style="text-align:center;padding:16px 0;border-bottom:2px solid var(--primary);margin-bottom:18px">
-        <div style="font-size:1.1rem;font-weight:800;letter-spacing:0.05em;color:var(--primary)">LEMBAR KERJA PESERTA DIDIK (LKPD)</div>
-        <div style="font-size:0.9rem;font-weight:600;margin-top:4px">${ctx.mapel} — Kelas ${ctx.kelas}</div>
-      </div>
-      <div class="doc-header-info">
-        <div><strong>Nama Peserta Didik:</strong> _______________</div>
-        <div><strong>Kelas:</strong> ${ctx.kelas}</div>
-        <div><strong>Tanggal:</strong> _______________</div>
-        <div><strong>Tujuan Pembelajaran:</strong> TP-01</div>
-      </div>
-      <h2>A. Tujuan Pembelajaran</h2>
-      <p>Melalui aktivitas dalam LKPD ini, peserta didik diharapkan dapat:</p>
-      <ol><li>Mengidentifikasi konsep dasar ${ctx.mapel} dengan tepat</li><li>Menjelaskan prinsip-prinsip yang berlaku dalam ${ctx.mapel}</li><li>Menerapkan konsep dalam situasi kehidupan nyata</li></ol>
-      <h2>B. Petunjuk Pengerjaan</h2>
-      <ul><li>Bacalah setiap instruksi dengan seksama sebelum mengerjakan</li><li>Diskusikan dengan anggota kelompokmu</li><li>Tuliskan jawabanmu di kolom yang tersedia</li><li>Kerjakan dengan jujur dan mandiri</li></ul>
-      <h2>C. Aktivitas 1 — Eksplorasi Konsep</h2>
-      <p>Amati fenomena berikut dan jawab pertanyaan di bawah ini!</p>
-      <div style="background:var(--bg2);padding:14px;border-radius:8px;margin:10px 0"><em>[Stimulus/fenomena yang relevan dengan ${ctx.mapel}]</em></div>
-      <p><strong>Pertanyaan 1:</strong> Apa yang kamu amati dari fenomena di atas?</p>
-      <div style="border:1px dashed var(--border);min-height:60px;border-radius:6px;padding:10px;margin:8px 0;font-size:0.8rem;color:var(--text3)">Jawaban: ...</div>
-      <h2>D. Aktivitas 2 — Analisis & Diskusi</h2>
-      <p>Bersama kelompokmu, analisis hubungan antara konsep yang kamu temukan!</p>
-      <div style="border:1px dashed var(--border);min-height:80px;border-radius:6px;padding:10px;margin:8px 0;font-size:0.8rem;color:var(--text3)">Hasil diskusi: ...</div>
-      <h2>E. Refleksi</h2>
-      <p>Tuliskan 3 hal yang kamu pelajari hari ini:</p>
-      <ol><li style="margin-bottom:16px;border-bottom:1px dashed var(--border);padding-bottom:8px">...</li><li style="margin-bottom:16px;border-bottom:1px dashed var(--border);padding-bottom:8px">...</li><li>...</li></ol>
-      <h2>F. Penilaian</h2>
-      <table><thead><tr><th>Aspek</th><th>Skor Max</th><th>Skor Didapat</th></tr></thead>
-      <tbody><tr><td>Kelengkapan Jawaban</td><td>40</td><td></td></tr><tr><td>Ketepatan Analisis</td><td>35</td><td></td></tr><tr><td>Kualitas Refleksi</td><td>25</td><td></td></tr><tr><td><strong>Total</strong></td><td><strong>100</strong></td><td></td></tr></tbody>
-      </table>
-    </div>` : `<div class="card"><div class="empty-state"><div class="es-icon">📋</div><div class="es-title">Lengkapi Wizard Generator</div></div></div>`}`;
-}
-
-function renderBankSoal(){
-  const ctx = STATE.context;
-  const soalData = ctx.mapel ? KB.generateSoal(ctx.mapel, ctx.kelas, 'TP-01', 'Pilihan Ganda', 5) : [];
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Bank Soal</span></div>
-    <div class="page-header">
-      <div class="page-title">Bank Soal</div>
-      <div class="page-sub">Koleksi soal HOTS, LOTS, dan AKM Style lengkap dengan kunci jawaban</div>
-    </div>
-    <div class="card" style="margin-bottom:16px">
-      <div class="card-title"><span class="ico">⚙️</span>Generator Soal AI</div>
-      <div class="form-row3">
-        <div class="form-group"><label class="form-label">Jenis Soal</label>
-          <select class="form-select" id="soal-jenis">
-            <option>Pilihan Ganda</option><option>Benar/Salah</option><option>Menjodohkan</option>
-            <option>Isian</option><option>Uraian</option><option>HOTS</option><option>AKM Style</option>
-          </select></div>
-        <div class="form-group"><label class="form-label">Level Kognitif</label>
-          <select class="form-select" id="soal-level">
-            <option>LOTS (C1-C2)</option><option>MOTS (C3-C4)</option><option>HOTS (C5-C6)</option>
-          </select></div>
-        <div class="form-group"><label class="form-label">Jumlah Soal</label>
-          <input type="number" class="form-input" value="5" min="1" max="20" id="soal-jumlah"></div>
-      </div>
-      <button class="btn btn-primary" onclick="generateSoal()">🤖 Generate Soal</button>
-    </div>
-    <div id="soal-list">
-      ${soalData.length ? soalData.map((s,i)=>`
-      <div class="card" style="margin-bottom:12px">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
-          <span class="badge badge-blue">Soal ${i+1}</span>
-          <div style="display:flex;gap:6px">
-            <span class="badge badge-purple">PG</span>
-            <span class="badge badge-yellow">HOTS</span>
-          </div>
-        </div>
-        <p style="font-size:0.85rem;font-weight:600;margin-bottom:10px">${s.soal}</p>
-        ${s.opsi ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-          ${s.opsi.map(o=>`<div style="background:var(--bg2);border-radius:6px;padding:8px 10px;font-size:0.8rem;
-            ${o.startsWith(s.kunci)?'border:2px solid var(--accent2);font-weight:600':''}">${o}</div>`).join('')}
-        </div>
-        <div style="margin-top:8px;font-size:0.78rem;color:var(--accent2);font-weight:600">✓ Kunci: ${s.kunci}</div>` : ''}
-        <div style="display:flex;gap:8px;margin-top:10px">
-          <button class="btn btn-ghost btn-sm" onclick="editSoal(${i})">✏️ Edit</button>
-          <button class="btn btn-ghost btn-sm" onclick="toast('Soal dihapus','warn')">🗑️ Hapus</button>
-          <button class="btn btn-ghost btn-sm" onclick="navigate('kartusoal')">🃏 Kartu Soal</button>
-        </div>
-      </div>`).join('') : `<div class="card"><div class="empty-state"><div class="es-icon">🏦</div><div class="es-title">Klik Generate Soal</div></div></div>`}
-    </div>`;
-}
-
-function generateSoal(){
-  const ctx = STATE.context;
-  if(!ctx.mapel){toast('Lengkapi Wizard Generator','warn');return;}
-  const jenis = document.getElementById('soal-jenis').value;
-  const jumlah = parseInt(document.getElementById('soal-jumlah').value)||5;
-  const soals = KB.generateSoal(ctx.mapel, ctx.kelas, 'TP-01', jenis, jumlah);
-  document.getElementById('soal-list').innerHTML = soals.map((s,i)=>`
-    <div class="card" style="margin-bottom:12px">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
-        <span class="badge badge-blue">Soal ${i+1}</span>
-        <span class="badge badge-purple">${jenis}</span>
-      </div>
-      <p style="font-size:0.85rem;font-weight:600;margin-bottom:10px">${s.soal}</p>
-      ${s.opsi ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">${s.opsi.map(o=>`<div style="background:var(--bg2);border-radius:6px;padding:8px 10px;font-size:0.8rem;${o.startsWith(s.kunci)?'border:2px solid var(--accent2);font-weight:600':''}">${o}</div>`).join('')}</div><div style="margin-top:8px;font-size:0.78rem;color:var(--accent2);font-weight:600">✓ Kunci: ${s.kunci}</div>` : `<div style="font-size:0.78rem;color:var(--text2)"><em>Kunci: ${s.kunci}</em></div>`}
-      <div style="display:flex;gap:8px;margin-top:10px">
-        <button class="btn btn-ghost btn-sm">✏️ Edit</button>
-        <button class="btn btn-ghost btn-sm">🃏 Kartu Soal</button>
-      </div>
-    </div>`).join('');
-  toast(`${jumlah} soal ${jenis} berhasil di-generate!`,'success');
-}
-
-function editSoal(i){toast(`Edit soal ${i+1}`,'info')}
-
-function renderKisi(){
-  const ctx = STATE.context;
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Kisi-kisi Soal</span></div>
-    <div class="page-header"><div class="page-title">Kisi-kisi Soal</div><div class="page-sub">Pemetaan soal berdasarkan TP, Indikator, dan Level Kognitif</div></div>
-    <div class="btn-group" style="margin-bottom:16px">
-      <button class="btn btn-primary" onclick="toast('Kisi-kisi di-generate','success')">⚡ Generate Kisi-kisi</button>
-      <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor','success')">📄 Ekspor</button>
-    </div>
-    ${ctx.mapel ? `
-    <div class="doc-preview">
-      <h1>KISI-KISI SOAL</h1>
-      <div class="doc-header-info">
-        <div><strong>Mata Pelajaran:</strong> ${ctx.mapel}</div><div><strong>Kelas:</strong> ${ctx.kelas}</div>
-        <div><strong>Semester:</strong> ${ctx.semester}</div><div><strong>Bentuk Soal:</strong> PG + Uraian</div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>No</th><th>TP</th><th>Materi</th><th>Indikator Soal</th><th>Level Kognitif</th><th>Bentuk Soal</th><th>No Soal</th></tr></thead>
-          <tbody>
-            ${[1,2,3,4,5].map(i=>`<tr>
-              <td>${i}</td><td>TP-0${i}</td><td>Materi ${i} ${ctx.mapel}</td>
-              <td>Disajikan stimulus, peserta didik dapat menganalisis...</td>
-              <td><span class="badge ${['badge-green','badge-green','badge-yellow','badge-yellow','badge-red'][i-1]}">${['C1','C2','C3','C4','C5'][i-1]}</span></td>
-              <td>${['PG','PG','PG','Uraian','Uraian'][i-1]}</td><td>${i}</td>
-            </tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>` : `<div class="card"><div class="empty-state"><div class="es-icon">📌</div><div class="es-title">Lengkapi Wizard Generator</div></div></div>`}`;
-}
-
-function renderKartuSoal(){
-  const ctx = STATE.context;
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Kartu Soal</span></div>
-    <div class="page-header"><div class="page-title">Kartu Soal</div><div class="page-sub">Format kartu soal standar dengan identitas lengkap</div></div>
-    <div class="btn-group" style="margin-bottom:16px">
-      <button class="btn btn-primary" onclick="toast('Kartu soal di-generate','success')">⚡ Generate Kartu Soal</button>
-      <button class="btn btn-ghost btn-sm" onclick="window.print()">🖨️ Cetak</button>
-    </div>
-    ${ctx.mapel ? `
-    <div class="card" style="max-width:600px;margin:0 auto">
-      <div style="border:2px solid var(--text);border-radius:8px;overflow:hidden">
-        <div style="background:var(--primary);color:#fff;padding:10px 16px;text-align:center;font-weight:800;letter-spacing:0.05em;font-size:0.9rem">KARTU SOAL</div>
-        <table style="width:100%;font-size:0.8rem">
-          <tr><td style="padding:6px 12px;border:1px solid var(--border);font-weight:700;width:40%">Mata Pelajaran</td><td style="padding:6px 12px;border:1px solid var(--border)">${ctx.mapel}</td></tr>
-          <tr><td style="padding:6px 12px;border:1px solid var(--border);font-weight:700">Kelas/Semester</td><td style="padding:6px 12px;border:1px solid var(--border)">${ctx.kelas} / ${ctx.semester}</td></tr>
-          <tr><td style="padding:6px 12px;border:1px solid var(--border);font-weight:700">Tujuan Pembelajaran</td><td style="padding:6px 12px;border:1px solid var(--border)">TP-01</td></tr>
-          <tr><td style="padding:6px 12px;border:1px solid var(--border);font-weight:700">Level Kognitif</td><td style="padding:6px 12px;border:1px solid var(--border)">C4 — Menganalisis (HOTS)</td></tr>
-          <tr><td style="padding:6px 12px;border:1px solid var(--border);font-weight:700">Bentuk Soal</td><td style="padding:6px 12px;border:1px solid var(--border)">Pilihan Ganda</td></tr>
-        </table>
-        <div style="padding:14px 16px;border-top:2px dashed var(--border)">
-          <div style="font-weight:700;margin-bottom:8px;font-size:0.82rem">SOAL:</div>
-          <p style="font-size:0.82rem;line-height:1.7">Analisislah pernyataan berikut terkait konsep dasar ${ctx.mapel}. Manakah hubungan yang paling tepat antara variabel X dan Y dalam konteks pembelajaran?</p>
-          <div style="margin-top:10px;font-size:0.8rem">
-            <div>A. Pernyataan pertama</div><div>B. Pernyataan kedua</div><div>C. Pernyataan ketiga (✓)</div><div>D. Pernyataan keempat</div>
-          </div>
-        </div>
-        <div style="padding:14px 16px;border-top:2px dashed var(--border);background:var(--bg2)">
-          <div style="font-weight:700;margin-bottom:6px;font-size:0.82rem">KUNCI JAWABAN: C</div>
-          <div style="font-size:0.78rem;color:var(--text2)">Pembahasan: Jawaban C tepat karena...</div>
-        </div>
-      </div>
-    </div>` : `<div class="card"><div class="empty-state"><div class="es-icon">🃏</div><div class="es-title">Lengkapi Wizard Generator</div></div></div>`}`;
-}
-
-function renderKKTP(){
-  const ctx = STATE.context;
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>KKTP</span></div>
-    <div class="page-header"><div class="page-title">Kriteria Ketercapaian Tujuan Pembelajaran (KKTP)</div><div class="page-sub">Penentuan KKTP berbasis interval nilai sesuai pedoman Kurikulum Merdeka</div></div>
-    ${ctx.mapel ? `
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title"><span class="ico">⚙️</span>Penetapan KKTP</div>
-        <div class="form-group"><label class="form-label">Metode Penetapan KKTP</label>
-          <select class="form-select"><option>Interval Nilai</option><option>Deskripsi Kriteria</option><option>Rubrik</option></select></div>
-        <div class="form-group"><label class="form-label">Batas Bawah "Belum Tuntas" (%)</label>
-          <input type="number" class="form-input" value="0" min="0" max="100"></div>
-        <div class="form-group"><label class="form-label">Batas Atas "Belum Tuntas" (%)</label>
-          <input type="number" class="form-input" value="64" min="0" max="100"></div>
-        <div class="form-group"><label class="form-label">Batas Bawah "Cukup Berkembang" (%)</label>
-          <input type="number" class="form-input" value="65" min="0" max="100"></div>
-        <div class="form-group"><label class="form-label">Batas Atas "Sudah Berkembang" (%)</label>
-          <input type="number" class="form-input" value="84" min="0" max="100"></div>
-        <button class="btn btn-primary" onclick="toast('KKTP disimpan','success')">💾 Simpan KKTP</button>
-      </div>
-      <div class="card">
-        <div class="card-title"><span class="ico">📊</span>Tabel KKTP ${ctx.mapel}</div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Interval</th><th>Predikat</th><th>Tindak Lanjut</th></tr></thead>
-            <tbody>
-              <tr><td>0 — 64%</td><td><span class="badge badge-red">Belum Tuntas</span></td><td>Remedial</td></tr>
-              <tr><td>65 — 74%</td><td><span class="badge badge-yellow">Cukup Berkembang</span></td><td>Remedial sebagian</td></tr>
-              <tr><td>75 — 84%</td><td><span class="badge badge-blue">Sudah Berkembang</span></td><td>Lanjut materi</td></tr>
-              <tr><td>85 — 100%</td><td><span class="badge badge-green">Sangat Berkembang</span></td><td>Pengayaan</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div style="margin-top:14px;padding:12px;background:var(--primary-light);border-radius:8px;font-size:0.82rem">
-          💡 <strong>KKTP Kurikulum Merdeka</strong> tidak menggunakan angka pasti (KKM), melainkan interval yang menggambarkan perkembangan peserta didik.
-        </div>
-      </div>
-    </div>` : `<div class="card"><div class="empty-state"><div class="es-icon">🏆</div><div class="es-title">Lengkapi Wizard Generator</div></div></div>`}`;
-}
-
-function renderRubrik(){
-  const ctx = STATE.context;
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Rubrik Penilaian</span></div>
-    <div class="page-header"><div class="page-title">Rubrik Penilaian</div><div class="page-sub">Rubrik holistik dan analitik sesuai standar penilaian autentik</div></div>
-    <div class="btn-group" style="margin-bottom:16px">
-      <button class="btn btn-primary" onclick="toast('Rubrik di-generate','success')">⚡ Generate Rubrik</button>
-      <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor','success')">📄 Ekspor</button>
-    </div>
-    ${ctx.mapel ? `
-    <div class="doc-preview">
-      <h1>RUBRIK PENILAIAN</h1>
-      <div class="doc-header-info">
-        <div><strong>Mata Pelajaran:</strong> ${ctx.mapel}</div><div><strong>Kelas:</strong> ${ctx.kelas}</div>
-        <div><strong>Jenis Penilaian:</strong> Analitik</div><div><strong>Skor Maksimal:</strong> 100</div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Dimensi</th><th>Sangat Baik (4)</th><th>Baik (3)</th><th>Cukup (2)</th><th>Perlu Bimbingan (1)</th></tr></thead>
-          <tbody>
-            ${[['Pemahaman Konsep','Memahami semua konsep dengan sangat baik dan dapat menjelaskan secara mendalam','Memahami sebagian besar konsep dengan baik','Memahami beberapa konsep dengan kurang lengkap','Belum memahami konsep dengan baik'],
-              ['Keterampilan Analisis','Menganalisis masalah secara sistematis dan menghasilkan kesimpulan tepat','Menganalisis masalah dengan baik namun kurang sistematis','Analisis kurang lengkap namun ada upaya','Belum mampu menganalisis masalah'],
-              ['Kreativitas Solusi','Menghasilkan solusi orisinal dan inovatif','Menghasilkan solusi yang cukup kreatif','Solusi masih konvensional','Belum menghasilkan solusi'],
-              ['Komunikasi','Mengkomunikasikan ide dengan sangat jelas','Komunikasi cukup jelas','Komunikasi kurang jelas','Belum mampu berkomunikasi']
-            ].map(([d,...skor])=>`<tr><td><strong>${d}</strong></td>${skor.map(s=>`<td style="font-size:0.8rem">${s}</td>`).join('')}</tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-      <h2>Konversi Skor ke Nilai</h2>
-      <table><thead><tr><th>Total Skor</th><th>Nilai</th><th>Predikat</th></tr></thead>
-      <tbody>
-        <tr><td>14–16</td><td>88–100</td><td><span class="badge badge-green">Sangat Berkembang</span></td></tr>
-        <tr><td>10–13</td><td>75–87</td><td><span class="badge badge-blue">Sudah Berkembang</span></td></tr>
-        <tr><td>6–9</td><td>60–74</td><td><span class="badge badge-yellow">Cukup Berkembang</span></td></tr>
-        <tr><td>4–5</td><td>0–59</td><td><span class="badge badge-red">Belum Tuntas</span></td></tr>
-      </tbody></table>
-    </div>` : `<div class="card"><div class="empty-state"><div class="es-icon">📏</div><div class="es-title">Lengkapi Wizard Generator</div></div></div>`}`;
-}
-
-function renderRekapNilai(){
-  const ctx = STATE.context;
-  const siswa = Array.from({length:10},(_,i)=>{
-    const n1=Math.floor(60+Math.random()*40),n2=Math.floor(60+Math.random()*40),n3=Math.floor(60+Math.random()*40);
-    const avg=Math.round((n1+n2+n3)/3);
-    return {nama:`Peserta Didik ${String(i+1).padStart(2,'0')}`,n1,n2,n3,avg,status:avg>=75?'Tuntas':'Belum Tuntas'};
-  });
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Rekap Nilai</span></div>
-    <div class="page-header"><div class="page-title">Rekap Nilai</div><div class="page-sub">Rekapitulasi nilai peserta didik semua asesmen</div></div>
-    <div class="btn-group" style="margin-bottom:16px">
-      <button class="btn btn-primary btn-sm" onclick="toast('Nilai diimpor','success')">📥 Import Nilai</button>
-      <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor Excel','success')">📊 Ekspor Excel</button>
-      <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor PDF','success')">📄 Ekspor PDF</button>
-    </div>
+    ${renderProgressBar(5)}
+    <div class="page-header"><div class="page-title">Tahap 5: Program Tahunan (Prota)</div></div>
+    
     <div class="card">
-      <div class="card-title"><span class="ico">📊</span>Rekap Nilai ${ctx.mapel||'Mata Pelajaran'} — Kelas ${ctx.kelas||'—'}</div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>No</th><th>Nama</th><th>Asesmen Diag.</th><th>Asesmen Form.</th><th>Asesmen Sum.</th><th>Rata-rata</th><th>Status</th></tr></thead>
+      <div class="doc-preview">
+        <h1>PROGRAM TAHUNAN (PROTA)</h1>
+        <div class="doc-header-info">
+          <div><strong>Mata Pelajaran:</strong> ${m.mapel}</div><div><strong>Fase / Kelas:</strong> ${m.fase} / ${m.kelas}</div>
+          <div><strong>Tahun Pelajaran:</strong> ${m.tahun}</div><div><strong>Penyusun:</strong> ${m.penyusun}</div>
+        </div>
+        
+        <h2>SEMESTER 1 (GANJIL)</h2>
+        <table class="no-border">
+          <tr style="border-bottom:2px solid #000"><th style="width:100px">Kode TP</th><th>Tujuan Pembelajaran</th><th style="width:120px">Waktu</th></tr>
+          ${sem1.map(tp=>`<tr><td><strong>${tp.kode}</strong></td><td>${tp.deskripsi}</td><td style="text-align:center">${tp.jp} JP</td></tr>`).join('')}
+        </table>
+
+        <h2>SEMESTER 2 (GENAP)</h2>
+        <table class="no-border">
+          <tr style="border-bottom:2px solid #000"><th style="width:100px">Kode TP</th><th>Tujuan Pembelajaran</th><th style="width:120px">Waktu</th></tr>
+          ${sem2.length > 0 ? sem2.map(tp=>`<tr><td><strong>${tp.kode}</strong></td><td>${tp.deskripsi}</td><td style="text-align:center">${tp.jp} JP</td></tr>`).join('') : `<tr><td colspan="3" style="text-align:center">Materi Sem 2 Kosong (Simulasi)</td></tr>`}
+        </table>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:20px">
+        <button class="btn btn-primary btn-lg" onclick="completeStep(5, 'promes')">💾 Simpan & Lanjut ke Tahap 6 ➡️</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ========== PAGE 6: PROMES ========== */
+function renderPromes(){
+  const m = STATE.master;
+  const tps = STATE.data.tps || [];
+  const bulan = ['Juli','Agustus','Sep','Okt','Nov','Des']; // Simple mock
+  
+  return `
+    ${renderProgressBar(6)}
+    <div class="page-header"><div class="page-title">Tahap 6: Program Semester (Promes)</div></div>
+    
+    <div class="card">
+      <div class="doc-preview" style="overflow-x:auto">
+        <h1>PROGRAM SEMESTER</h1>
+        <table style="min-width:700px;font-size:0.8rem">
+          <thead>
+            <tr><th rowspan="2">TP</th><th rowspan="2">JP</th><th colspan="4">Bulan 1</th><th colspan="4">Bulan 2</th><th colspan="4">Bulan 3</th></tr>
+            <tr>${Array(12).fill('<th>W</th>').join('')}</tr>
+          </thead>
           <tbody>
-            ${siswa.map((s,i)=>`<tr>
-              <td>${i+1}</td><td>${s.nama}</td><td>${s.n1}</td><td>${s.n2}</td><td>${s.n3}</td>
-              <td><strong>${s.avg}</strong></td>
-              <td><span class="badge ${s.status==='Tuntas'?'badge-green':'badge-red'}">${s.status}</span></td>
-            </tr>`).join('')}
+            ${tps.map((tp,i)=>`<tr><td><strong>${tp.kode}</strong></td><td style="text-align:center">${tp.jp}</td>${Array(12).fill(0).map((_,x)=>`<td style="text-align:center">${x==i||x==(i+1)?'✓':''}</td>`).join('')}</tr>`).join('')}
           </tbody>
         </table>
       </div>
-      <div style="margin-top:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px">
-        ${[['Rata-rata Kelas',Math.round(siswa.reduce((a,s)=>a+s.avg,0)/siswa.length),'badge-blue'],
-           ['Tuntas',siswa.filter(s=>s.status==='Tuntas').length+' siswa','badge-green'],
-           ['Belum Tuntas',siswa.filter(s=>s.status!=='Tuntas').length+' siswa','badge-red'],
-           ['Ketuntasan',Math.round(siswa.filter(s=>s.status==='Tuntas').length/siswa.length*100)+'%','badge-purple']
-          ].map(([l,v,b])=>`<div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center">
-            <div style="font-size:0.7rem;color:var(--text2);margin-bottom:4px">${l}</div>
-            <div style="font-size:1.3rem;font-weight:800">${v}</div>
-          </div>`).join('')}
+      <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:20px">
+        <button class="btn btn-primary btn-lg" onclick="completeStep(6, 'rpm')">💾 Simpan & Lanjut ke Tahap 7 ➡️</button>
       </div>
-    </div>`;
-}
-
-function renderRemedial(){
-  return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Program Remedial</span></div>
-    <div class="page-header"><div class="page-title">Program Remedial</div><div class="page-sub">Rencana pembelajaran remedial untuk peserta didik yang belum mencapai KKTP</div></div>
-    <div class="btn-group" style="margin-bottom:16px">
-      <button class="btn btn-primary" onclick="toast('Program remedial di-generate','success')">⚡ Generate Remedial</button>
-      <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor','success')">📄 Ekspor</button>
     </div>
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title"><span class="ico">🔄</span>Peserta Remedial</div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Nama</th><th>Nilai Awal</th><th>TP Belum Tuntas</th></tr></thead>
-            <tbody>
-              ${[['Peserta Didik 03',62,['TP-02','TP-03']],['Peserta Didik 07',58,['TP-01','TP-04']],['Peserta Didik 11',70,['TP-03']]].map(([n,v,tp])=>`
-              <tr><td>${n}</td><td><span class="badge badge-red">${v}</span></td><td>${tp.map(t=>`<span class="badge badge-yellow" style="margin-right:3px">${t}</span>`).join('')}</td></tr>`).join('')}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title"><span class="ico">📝</span>Rencana Remedial</div>
-        <div class="accordion">
-          ${[['Pembelajaran Ulang','Guru menjelaskan ulang materi dengan pendekatan berbeda, lebih visual dan konkret.'],
-             ['Tutor Sebaya','Peserta didik yang sudah tuntas membimbing yang belum tuntas dalam kelompok kecil.'],
-             ['Soal Remedial','Soal dengan tingkat kesulitan disesuaikan, fokus pada TP yang belum dicapai.']].map(([t,d],i)=>`
-          <div class="accordion-item ${i===0?'open':''}">
-            <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">${t}<span class="accordion-arrow">▼</span></div>
-            <div class="accordion-body">${d}</div>
-          </div>`).join('')}
-        </div>
-      </div>
-    </div>`;
+  `;
 }
 
-function renderPengayaan(){
+/* ========== PAGE 7: RPM / MODUL AJAR ========== */
+function renderRPM(){
+  const m = STATE.master;
+  const tps = STATE.data.tps || [];
+  
   return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Program Pengayaan</span></div>
-    <div class="page-header"><div class="page-title">Program Pengayaan</div><div class="page-sub">Aktivitas pengayaan bagi peserta didik yang telah melampaui KKTP</div></div>
-    <div class="btn-group" style="margin-bottom:16px">
-      <button class="btn btn-primary" onclick="toast('Program pengayaan di-generate','success')">⚡ Generate Pengayaan</button>
-      <button class="btn btn-ghost btn-sm" onclick="toast('Diekspor','success')">📄 Ekspor</button>
+    ${renderProgressBar(7)}
+    <div class="page-header"><div class="page-title">Tahap 7: Modul Ajar (RPM)</div></div>
+    
+    <div class="card">
+      <div style="margin-bottom:16px"><label class="form-label">Pilih TP untuk di-generate menjadi Modul Ajar:</label>
+        <select class="form-select">${tps.map(t=>`<option>${t.kode} - ${t.deskripsi}</option>`).join('')}</select>
+      </div>
+      
+      <div class="doc-preview">
+        <h2>MODUL AJAR: ${m.topik.toUpperCase()}</h2>
+        <table style="border:none">
+          <tr class="no-border"><td style="width:200px">Penyusun</td><td>: ${m.penyusun}</td></tr>
+          <tr class="no-border"><td>Sekolah</td><td>: ${m.sekolah}</td></tr>
+          <tr class="no-border"><td>Fase/Kelas/Semester</td><td>: ${m.fase} / ${m.kelas} / ${m.semester}</td></tr>
+          <tr class="no-border"><td>Model Pembelajaran</td><td>: ${m.strategi}</td></tr>
+        </table>
+        
+        <h3 style="margin-top:20px">A. KOMPONEN INTI</h3>
+        <p><strong>Pertanyaan Pemantik:</strong> ${m.pemantik}</p>
+        <div style="background:#f0f0f0;padding:10px;border:1px solid #000;margin:10px 0">
+          <strong>Langkah Pembelajaran:</strong><br>
+          1. Pendahuluan: Berdoa, absensi, apersepsi.<br>
+          2. Inti: Eksplorasi materi ${m.topik} sesuai model ${m.strategi}.<br>
+          3. Penutup: Kesimpulan, refleksi, asesmen.
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:20px">
+        <button class="btn btn-primary btn-lg" onclick="completeStep(7, 'lkpd')">💾 Simpan & Lanjut ke Tahap 8 ➡️</button>
+      </div>
     </div>
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title"><span class="ico">⭐</span>Peserta Pengayaan</div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Nama</th><th>Nilai</th><th>Predikat</th></tr></thead>
-            <tbody>
-              ${[['Peserta Didik 01',95],['Peserta Didik 05',88],['Peserta Didik 09',92]].map(([n,v])=>`
-              <tr><td>${n}</td><td><strong>${v}</strong></td><td><span class="badge badge-green">Sangat Berkembang</span></td></tr>`).join('')}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title"><span class="ico">🚀</span>Aktivitas Pengayaan</div>
-        <div class="accordion">
-          ${[['Proyek Mandiri','Peserta didik merancang proyek kreatif berbasis masalah nyata dengan menggunakan konsep yang telah dikuasai.'],
-             ['Eksplorasi Lanjutan','Memberikan materi pengayaan atau buku referensi tingkat lanjut untuk memperdalam pemahaman.'],
-             ['Menjadi Tutor','Peserta didik berbagi pengetahuan kepada teman sebaya sebagai penguat pembelajaran.']].map(([t,d],i)=>`
-          <div class="accordion-item ${i===0?'open':''}">
-            <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">${t}<span class="accordion-arrow">▼</span></div>
-            <div class="accordion-body">${d}</div>
-          </div>`).join('')}
-        </div>
-      </div>
-    </div>`;
+  `;
 }
 
-function renderAnalisis(){
+/* ========== PAGE 8: LKPD ========== */
+function renderLKPD(){
+  const m = STATE.master;
   return `
-    ${wizardHTML()}
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Analisis Hasil Belajar</span></div>
-    <div class="page-header"><div class="page-title">Analisis Hasil Belajar</div><div class="page-sub">Visualisasi dan analisis komprehensif capaian pembelajaran</div></div>
-    <div class="stats-grid">
-      ${[['Rata-rata Kelas','78.5','Nilai rata-rata seluruh asesmen','#1a56db'],['Ketuntasan','87%','Di atas KKTP 75%','#10b981'],['Remedial','4 Siswa','Belum mencapai KKTP','#ef4444'],['Pengayaan','8 Siswa','Melampaui KKTP','#8b5cf6']].map(([l,v,s,c])=>`
-      <div class="stat-card" style="--stat-color:${c}">
-        <div class="stat-label">${l}</div><div class="stat-value">${v}</div><div class="stat-sub">${s}</div>
-      </div>`).join('')}
+    ${renderProgressBar(8)}
+    <div class="page-header"><div class="page-title">Tahap 8: LKPD</div></div>
+    <div class="card">
+      <div class="doc-preview">
+        <h1 style="text-decoration:none">LEMBAR KERJA PESERTA DIDIK (LKPD)</h1>
+        <h2 style="border:none">Materi: ${m.topik}</h2>
+        <div style="border:1px solid #000;padding:10px;margin-bottom:20px">
+          Nama Kelompok: .....................<br>Kelas: ${m.kelas}
+        </div>
+        <p><strong>Tugas:</strong> Diskusikan pertanyaan berikut berdasarkan prinsip ${m.strategi}:</p>
+        <p>1. ${m.pemantik}</p>
+        <div style="height:100px;border:1px dashed #000;margin-bottom:20px"></div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:20px">
+        <button class="btn btn-primary btn-lg" onclick="completeStep(8, 'kisi')">💾 Simpan & Lanjut ke Tahap 9 ➡️</button>
+      </div>
     </div>
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title"><span class="ico">📊</span>Distribusi Nilai</div>
-        ${[['91–100',8,'Sangat Berkembang'],['76–90',20,'Sudah Berkembang'],['61–75',7,'Cukup Berkembang'],['0–60',4,'Belum Tuntas']].map(([r,n,p])=>`
-        <div class="chart-bar-item" style="margin-bottom:10px">
-          <div class="chart-bar-label" style="font-size:0.7rem">${r}</div>
-          <div class="chart-bar-track"><div class="chart-bar-fill" style="width:${n/32*100}%"></div></div>
-          <div class="chart-bar-val">${n}</div>
-        </div>`).join('')}
-      </div>
-      <div class="card">
-        <div class="card-title"><span class="ico">🎯</span>Capaian per Tujuan Pembelajaran</div>
-        ${[['TP-01',92],['TP-02',85],['TP-03',78],['TP-04',72],['TP-05',65]].map(([tp,v])=>`
-        <div style="margin-bottom:10px">
-          <div style="display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:3px">
-            <span>${tp}</span><span style="font-weight:700;color:${v>=75?'var(--accent2)':'var(--danger)'}">${v}%</span>
-          </div>
-          <div class="progress"><div class="progress-bar" style="width:${v}%;background:${v>=75?'linear-gradient(90deg,var(--accent2),#34d399)':'linear-gradient(90deg,var(--danger),#f87171)'}"></div></div>
-        </div>`).join('')}
-      </div>
-    </div>`;
+  `;
 }
 
-function renderLaporan(){
+/* ========== PAGE 9: KISI-KISI ========== */
+function renderKisiSoal(){
+  const m = STATE.master;
   return `
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Ekspor Laporan</span></div>
-    <div class="page-header"><div class="page-title">Ekspor Laporan</div><div class="page-sub">Ekspor seluruh perangkat ajar ke berbagai format</div></div>
-    <div class="grid3">
-      ${[
-        {ico:'📄',title:'Ekspor PDF',sub:'Format PDF siap cetak',items:['ATP','Prota','Promes','RPM','LKPD','Kisi-kisi','Rubrik'],color:'#ef4444'},
-        {ico:'📝',title:'Ekspor Word (.docx)',sub:'Format Word yang dapat diedit',items:['RPM','Modul Ajar','LKPD','Laporan Nilai'],color:'#1a56db'},
-        {ico:'📊',title:'Ekspor Excel (.xlsx)',sub:'Format spreadsheet terstruktur',items:['Rekap Nilai','Analisis Hasil Belajar','Data ATP','Kisi-kisi'],color:'#10b981'},
-      ].map(({ico,title,sub,items,color})=>`
-      <div class="card" style="border-top:3px solid ${color}">
-        <div style="font-size:2rem;margin-bottom:8px">${ico}</div>
-        <div style="font-size:0.95rem;font-weight:700;margin-bottom:4px">${title}</div>
-        <div style="font-size:0.78rem;color:var(--text2);margin-bottom:14px">${sub}</div>
-        <div style="margin-bottom:14px">${items.map(i=>`<div style="font-size:0.78rem;padding:4px 0;border-bottom:1px solid var(--border);color:var(--text2)">📁 ${i}</div>`).join('')}</div>
-        <button class="btn btn-primary btn-sm" style="width:100%;background:${color}" onclick="toast('Mengekspor...','info')">⬇️ Ekspor Semua</button>
-      </div>`).join('')}
+    ${renderProgressBar(9)}
+    <div class="page-header"><div class="page-title">Tahap 9: Kisi-kisi Soal</div></div>
+    <div class="card">
+      <div class="doc-preview">
+        <h1>KISI-KISI SOAL</h1>
+        <p>Mata Pelajaran: ${m.mapel} | Platform: ${m.platform}</p>
+        <table>
+          <tr><th>Materi</th><th>Indikator</th><th>Level</th><th>Bentuk</th></tr>
+          <tr><td>${m.topik}</td><td>Menganalisis fenomena terkait...</td><td>HOTS (C4)</td><td>PG</td></tr>
+        </table>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:20px">
+        <button class="btn btn-primary btn-lg" onclick="completeStep(9, 'rubrik')">💾 Simpan & Lanjut ke Tahap 10 ➡️</button>
+      </div>
     </div>
-    <div class="card" style="margin-top:16px">
-      <div class="card-title"><span class="ico">📦</span>Ekspor Paket Lengkap</div>
-      <p style="font-size:0.83rem;color:var(--text2);margin-bottom:14px">Ekspor seluruh perangkat ajar dalam satu paket zip yang terorganisir</p>
-      <div class="btn-group">
-        <button class="btn btn-primary" onclick="toast('Mempersiapkan paket...','info')">📦 Download Paket Lengkap</button>
-        <button class="btn btn-outline" onclick="toast('Dikirim ke email','success')">📧 Kirim ke Email</button>
-      </div>
-    </div>`;
+  `;
 }
 
-function renderPengaturan(){
+/* ========== PAGE 10: RUBRIK ========== */
+function renderRubrik(){
+  const m = STATE.master;
   return `
-    <div class="breadcrumb"><a onclick="navigate('dashboard')">Dashboard</a><span class="sep">›</span><span>Pengaturan</span></div>
-    <div class="page-header"><div class="page-title">Pengaturan Aplikasi</div><div class="page-sub">Konfigurasi profil, tampilan, dan preferensi aplikasi</div></div>
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title"><span class="ico">👤</span>Profil Pengguna</div>
-        <div class="form-group"><label class="form-label">Nama Lengkap</label><input class="form-input" value="Guru Profesional" id="set-nama"></div>
-        <div class="form-group"><label class="form-label">NIP / NUPTK</label><input class="form-input" placeholder="Masukkan NIP/NUPTK" id="set-nip"></div>
-        <div class="form-group"><label class="form-label">Instansi / Sekolah</label><input class="form-input" placeholder="Nama sekolah" id="set-sekolah"></div>
-        <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="email@sekolah.id"></div>
-        <button class="btn btn-primary" onclick="toast('Profil disimpan','success')">💾 Simpan Profil</button>
+    ${renderProgressBar(10)}
+    <div class="page-header"><div class="page-title">Tahap 10: Rubrik & KKTP</div></div>
+    <div class="card">
+      <div class="doc-preview">
+        <h1>RUBRIK PENILAIAN & KKTP</h1>
+        <table>
+          <tr><th>Aspek</th><th>Sangat Baik</th><th>Cukup</th><th>Kurang</th></tr>
+          <tr><td>Pemahaman Konsep</td><td>Tepat & Logis</td><td>Cukup Tepat</td><td>Kurang</td></tr>
+        </table>
+        <p style="margin-top:20px;text-align:center;font-weight:bold;color:green">SELESAI! Seluruh Perangkat Ajar Telah Terhubung dan Terbuat.</p>
       </div>
-      <div class="card">
-        <div class="card-title"><span class="ico">🎨</span>Tampilan</div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
-          <span style="font-size:0.83rem;font-weight:600">Mode Gelap</span>
-          <div class="dark-toggle" onclick="toggleDark()">
-            <div class="toggle-track ${STATE.dark?'on':''}" id="set-dark-track"><div class="toggle-thumb"></div></div>
-          </div>
-        </div>
-        <div class="form-group" style="margin-top:14px"><label class="form-label">Ukuran Font</label>
-          <select class="form-select"><option>Normal (15px)</option><option>Besar (17px)</option><option>Kecil (13px)</option></select></div>
-        <div class="form-group"><label class="form-label">Bahasa</label>
-          <select class="form-select"><option>Bahasa Indonesia</option><option>English</option></select></div>
+      <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:20px">
+        <button class="btn btn-success btn-lg" onclick="completeStep(10, 'dashboard')">🎉 Selesai & Kembali ke Dashboard</button>
       </div>
-      <div class="card">
-        <div class="card-title"><span class="ico">💾</span>Data & Penyimpanan</div>
-        <p style="font-size:0.83rem;color:var(--text2);margin-bottom:14px">Data tersimpan secara lokal di browser Anda menggunakan LocalStorage dan IndexedDB.</p>
-        <div class="btn-group">
-          <button class="btn btn-outline btn-sm" onclick="exportData()">📤 Ekspor Data</button>
-          <button class="btn btn-ghost btn-sm" onclick="importData()">📥 Impor Data</button>
-          <button class="btn btn-ghost btn-sm" style="color:var(--danger);border-color:var(--danger)" onclick="clearData()">🗑️ Hapus Semua Data</button>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title"><span class="ico">ℹ️</span>Tentang Aplikasi</div>
-        <div style="font-size:0.83rem;line-height:1.9;color:var(--text2)">
-          <div><strong>Nama:</strong> EduPlan AI</div>
-          <div><strong>Versi:</strong> 2.0.0</div>
-          <div><strong>Standar:</strong> Kurikulum Merdeka (BSKAP terbaru)</div>
-          <div><strong>Penyimpanan:</strong> LocalStorage + IndexedDB</div>
-          <div><strong>Platform:</strong> Web Progressive App (PWA)</div>
-        </div>
-        <div style="margin-top:14px;padding:12px;background:var(--primary-light);border-radius:8px;font-size:0.78rem;color:var(--text2)">
-          ✅ Aplikasi ini bekerja sepenuhnya offline tanpa memerlukan server backend atau API key eksternal.
-        </div>
-      </div>
-    </div>`;
-}
-
-/* ========== UTILITY ========== */
-function filterNav(q){
-  document.querySelectorAll('.nav-item[data-page]').forEach(el=>{
-    const show = !q || el.textContent.toLowerCase().includes(q.toLowerCase());
-    el.style.display = show ? '' : 'none';
-  });
-}
-
-function exportData(){
-  const data = JSON.stringify(STATE, null, 2);
-  const blob = new Blob([data], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'eduplan-ai-backup.json';
-  a.click(); URL.revokeObjectURL(url);
-  toast('Data diekspor','success');
-}
-
-function importData(){
-  const input = document.createElement('input');
-  input.type = 'file'; input.accept = '.json';
-  input.onchange = e => {
-    const r = new FileReader();
-    r.onload = ev => {
-      try{
-        const d = JSON.parse(ev.target.result);
-        if(d.context) STATE.context = {...STATE.context,...d.context};
-        saveState(); toast('Data diimpor','success');
-      }catch{toast('File tidak valid','error');}
-    };
-    r.readAsText(e.target.files[0]);
-  };
-  input.click();
-}
-
-function clearData(){
-  openModal('Hapus Semua Data','<p style="color:var(--text2)">Apakah Anda yakin ingin menghapus semua data? Tindakan ini tidak dapat dibatalkan.</p>',
-    `<button class="btn btn-primary" style="background:var(--danger)" onclick="localStorage.clear();closeModal();toast('Data dihapus','warn');location.reload()">🗑️ Hapus Semua</button>
-     <button class="btn btn-ghost" onclick="closeModal()">Batal</button>`);
-}
-
-function showNotif(){
-  openModal('Notifikasi',`
-    <div style="display:flex;flex-direction:column;gap:10px">
-      ${[{ico:'📝',t:'RPM Pertemuan 5 belum selesai',s:'2 jam lalu',type:'warn'},
-         {ico:'✅',t:'ATP berhasil di-generate',s:'1 hari lalu',type:'success'},
-         {ico:'⚠️',t:'3 peserta didik perlu remedial',s:'2 hari lalu',type:'warn'},
-         {ico:'📊',t:'Rekap nilai tersedia untuk diunduh',s:'3 hari lalu',type:'info'}
-        ].map(n=>`<div style="display:flex;gap:12px;padding:12px;background:var(--bg);border-radius:8px">
-          <span style="font-size:1.2rem">${n.ico}</span>
-          <div><div style="font-size:0.83rem;font-weight:600">${n.t}</div><div style="font-size:0.72rem;color:var(--text3)">${n.s}</div></div>
-        </div>`).join('')}
-    </div>`,
-    `<button class="btn btn-ghost btn-sm" onclick="closeModal()">Tutup</button>`);
+    </div>
+  `;
 }
 
 /* ========== INIT ========== */
 loadState();
 if(STATE.dark){
-  document.body.dataset.dark='true';
+  document.body.dataset.dark = 'true';
   document.getElementById('dark-toggle-track')?.classList.add('on');
-  const l=document.getElementById('dark-label');
-  if(l) l.textContent='Mode Gelap';
 }
-navigate('dashboard');
+navigate(STATE.currentPage);
 
-// Auto-save every 30 seconds
-setInterval(saveState, 30000);
 </script>
 </body>
 </html>
